@@ -1,0 +1,24 @@
+		"build_farm"
+		{
+				"BaseClass" "ability_datadriven"
+                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT"
+                "AbilityManaCost" "0"
+                "AbilityTextureName"            "rubick_spell_steal"
+                "AbilityCastRange" "250"
+                "AbilityCastPoint" "0"
+ 
+                "OnSpellStart"
+                {
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/buildings.lua"
+						"Function"			"createBuilding"
+						"Target"			"POINT"
+						"Cost"				"50"
+						"Unit"				"farm"
+						"BuildTime"			"1.0"
+						"HullRadius" 		"64"	
+						"Scale"				"3"
+					}
+                }
+		}

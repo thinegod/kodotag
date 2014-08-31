@@ -1,0 +1,24 @@
+		"build_basic_tower"
+		{
+				"BaseClass" "ability_datadriven"
+                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT"
+                "AbilityManaCost" "0"
+                "AbilityTextureName"            "rubick_telekinesis"
+                "AbilityCastRange" "250"
+                "AbilityCastPoint" "0"
+ 
+                "OnSpellStart"
+                {
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/buildings.lua"
+						"Function"			"createBuilding"
+						"Target"			"POINT"
+						"Cost"				"50"
+						"Unit"				"basic_tower"
+						"BuildTime"			"5"
+						"HullRadius" 		"64"	
+						"Scale"				".85"	
+					}
+                }
+		}

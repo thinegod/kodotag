@@ -1,0 +1,4 @@
+//Generated using Dota Custom File Generator by cris9696
+"DOTAAbilities"
+{
+}

@@ -1,0 +1,25 @@
+		"upgrade_barricade_1"
+        {
+                "BaseClass" "ability_datadriven"
+                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+                "AbilityManaCost" "0"
+
+                "AbilityTextureName"            "axe_culling_blade"
+                "AbilityCastRange" "250"
+                "AbilityCastPoint" "0"
+ 
+                "OnSpellStart"
+                {
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/buildings.lua"
+						"Function"			"upgradeBuilding"
+						"Target"			"CASTER"
+						"Cost"				"2"
+						"Unit"				"barricade_2"
+						"BuildTime"			"5"
+						"HullRadius" 		"64"	
+						"Scale"				".45"	
+					}
+                }
+        }
