@@ -41,6 +41,5 @@ function upgradeBuilding(keys)
 	building:SetControllableByPlayer( owner:GetPlayerID(), true )
 	building.Cost=keys.Cost+oldcost
 	end
-	
-
 end
+

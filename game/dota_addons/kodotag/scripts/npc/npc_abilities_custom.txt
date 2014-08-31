@@ -79,10 +79,10 @@
 							"Function"			"createBuilding"
 							"Target"			"POINT"
 							"Cost"				"0"
-							"Unit"				"farm"
+							"Unit"				"castle_1"
 							"BuildTime"			"1.0"
 							"HullRadius" 		"64"	
-							"Scale"				"3"
+							"Scale"				"1"
 						}
 	                }
 			}
@@ -147,7 +147,7 @@
 	                "BaseClass" "ability_datadriven"
 	                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	                "AbilityManaCost" "0"
-	 
+	
 	                "AbilityTextureName"            "axe_culling_blade"
 	                "AbilityCastRange" "250"
 	                "AbilityCastPoint" "0"

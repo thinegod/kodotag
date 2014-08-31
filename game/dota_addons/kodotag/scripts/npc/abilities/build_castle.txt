@@ -15,7 +15,7 @@
 						"Function"			"createBuilding"
 						"Target"			"POINT"
 						"Cost"				"0"
-						"Unit"				"farm"
+						"Unit"				"castle_1"
 						"BuildTime"			"1.0"
 						"HullRadius" 		"64"	
 						"Scale"				"3"
