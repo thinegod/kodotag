@@ -346,7 +346,7 @@
 			// Bounds
 			//----------------------------------------------------------------
 			"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-			"RingRadius"				"50"
+			"RingRadius"				"128"
 			"HealthBarOffset"			"-1"		// -1 means use the models
 	
 			// Movement

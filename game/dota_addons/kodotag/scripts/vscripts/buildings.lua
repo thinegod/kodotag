@@ -11,10 +11,14 @@ function createBuilding(keys)
 		BuildingHelper:AddBuilding(building)
 		building:UpdateHealth(keys.BuildTime,true,keys.Scale)
 		building:SetHullRadius(keys.HullRadius)
-		building:SetInvulnCount(0)
+		if building.SetInvulnCount ~=nil then
+			building:SetInvulnCount(0)
+		end
 		building:SetOwner(keys.caster)
 		building:SetControllableByPlayer( keys.caster:GetPlayerID(), true )
 		building.Cost = keys.Cost
+		--print(building:GetClassname())--Someone didn't fucking get the naming convention..
+		--print(building:GetModelName())
 		end
 	else
 		--Fire a game event here and use Actionscript to let the player know he can't place a building at this spot.
@@ -42,4 +46,6 @@ function upgradeBuilding(keys)
 	building.Cost=keys.Cost+oldcost
 	end
 end
+
+
 

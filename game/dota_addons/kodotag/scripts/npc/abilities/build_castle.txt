@@ -18,7 +18,15 @@
 						"Unit"				"castle_1"
 						"BuildTime"			"1.0"
 						"HullRadius" 		"64"	
-						"Scale"				"3"
+						"Scale"				"1"
+					}
+					
+						"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/buildings.lua"
+						"Function"			"createCircularTrigger"
+						"Target"			"POINT"
+						"Radius" 			"250"
 					}
                 }
 		}

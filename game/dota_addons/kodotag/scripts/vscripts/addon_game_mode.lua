@@ -1,6 +1,6 @@
 
 
-
+GOLD_MINE_THINK_TIME=0.2
 if KodoTagGameMode == nil then
 	KodoTagGameMode = class({})
 end
@@ -37,6 +37,7 @@ end
 
 function KodoTagGameMode:InitGameMode()
 	self.goldMiners={}
+	self.goldReturn={}
 	self.goldGain=10
 	GameRules:SetTimeOfDay( 0.75 )
 	GameRules:SetHeroSelectionTime( 5.0 )
@@ -50,7 +51,7 @@ function KodoTagGameMode:InitGameMode()
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetSameHeroSelectionEnabled(true)
 	--KodoTagGameMode:DisplayBuildingGrids()
-	GameRules:GetGameModeEntity():SetThink("goldGeneration",self,"goldGeneration",1)
+	GameRules:GetGameModeEntity():SetThink("goldGeneration",self,"goldGeneration",GOLD_MINE_THINK_TIME)
 	BuildingHelper:BlockGridNavSquares(16384)
 	--[[local creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
 	creature:SetInitialGoalEntity(  Entities:FindByName(nil,"waypoint_1_1") )
@@ -61,22 +62,44 @@ end
 
 
 function KodoTagGameMode:goldGeneration()
+local basePos=nil
+local playerPos=nil
 	for key,value in ipairs(self.goldMiners) do
-		if(value.count>2)then
-			self.goldMiners[key].count=0
-			value.activator:SetGold(value.activator:GetGold()+self.goldGain,false)
-			print ("trying to find by model")
-			print (Entities:FindByModel(value.activator,"building_racks_melee_reference"))--denna ska inte vara nil för då har vi inte hittat modellen
-			value.activator:MoveToNPC(Entities:FindByModel(value.activator,"building_racks_melee_reference"))
-			--value.activator:MoveToPosition(value.activator:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ))
+		basePos=Entities:FindByClassnameNearest("npc_dota_base",value.activator:GetAbsOrigin(),10000):GetAbsOrigin()
+		playerPos=value.activator:GetAbsOrigin()
+		goldReturnVal={self.goldMiners[key].activator,self.goldMiners[key].goldMine}
+		if in_array(self.goldReturn,goldReturnVal) or value.count>=3  then-- this doesnt work properly
+			table.insert(self.goldReturn,goldReturnVal)
+			table.remove(self.goldMiners,key)
+			--if self.goldMiners[key].moveToBaseCommand == nil then
+			--self.goldMiners[key].moveToBaseCommand=true
+			value.activator:MoveToPosition(basePos)
+			--end
 		else
-			self.goldMiners[key].count=self.goldMiners[key].count+1
+			self.goldMiners[key].count=self.goldMiners[key].count+GOLD_MINE_THINK_TIME
 		end
 	end
-	return 1
+	for key,player in ipairs(self.goldReturn) do
+		basePos=Entities:FindByClassnameNearest("npc_dota_base",player[1]:GetAbsOrigin(),10000):GetAbsOrigin()
+		playerPos=player[1]:GetAbsOrigin()
+		print ((basePos-playerPos):Length2D())
+		if (basePos-playerPos):Length2D()<200 then
+			player[1]:SetGold(player[1]:GetGold()+self.goldGain,false)
+			player[1]:MoveToPosition(player[2])
+			table.remove(self.goldReturn,key)
+		end
+	end
+	return GOLD_MINE_THINK_TIME
 end
 
-
+function in_array(array,element)
+	for i=1,#array do
+		if array[i]==element then
+		return true
+		end
+	end
+	return nil
+end
 function KodoTagGameMode:DisplayBuildingGrids()
   print( '******* Displaying Building Grids ***************' )
   local cmdPlayer = Convars:GetCommandClient()
