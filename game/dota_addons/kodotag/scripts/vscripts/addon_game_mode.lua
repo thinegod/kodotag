@@ -81,6 +81,7 @@ local playerPos=nil
 		playerPos=array.player:GetAbsOrigin()
 		if (basePos-playerPos):Length2D()<200 then
 			array.player:SetGold(player[1]:GetGold()+self.goldGain,false)
+			--EmitSoundOnClient(string a, handle b)
 			array.player:MoveToPosition(array.goldMine)
 			table.remove(self.goldReturn,key)
 		end
