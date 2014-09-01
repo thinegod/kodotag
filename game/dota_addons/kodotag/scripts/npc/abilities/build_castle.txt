@@ -1,6 +1,6 @@
-		"build_castle"
-		{
-				"BaseClass" "ability_datadriven"
+"build_castle"
+{
+		"BaseClass" "ability_datadriven"
                 "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT"
                 "AbilityManaCost" "0"
                 "AbilityTextureName"            "lich_frost_armor"
@@ -21,12 +21,5 @@
 						"Scale"				"1"
 					}
 					
-						"RunScript"
-					{
-						"ScriptFile"		"scripts/vscripts/buildings.lua"
-						"Function"			"createCircularTrigger"
-						"Target"			"POINT"
-						"Radius" 			"250"
-					}
                 }
-		}
+}
