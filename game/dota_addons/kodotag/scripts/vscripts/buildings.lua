@@ -5,8 +5,7 @@ function createBuilding(keys)
 	local point = BuildingHelper:AddBuildingToGrid(keys.target_points[1], 2, keys.caster)
 	-- Create model and do general initiation.
 	if point ~= -1 then
-		if keys.caster:GetGold()-keys.Cost >= 0 then
-		keys.caster:SetGold(keys.caster:GetGold()-keys.Cost,false)
+		if pay(keys.caster,keys.Cost) then
 		local building = CreateUnitByName(keys.Unit, point, false, nil, nil, keys.caster:GetTeam())
 		BuildingHelper:AddBuilding(building)
 		building:UpdateHealth(keys.BuildTime,true,keys.Scale)

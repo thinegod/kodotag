@@ -62,10 +62,10 @@
 
 
 	//Start of file build_castle.txt
-			"build_castle"
-			{
-					"BaseClass" "ability_datadriven"
-	                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT"
+	"build_castle"
+	{
+			"BaseClass" "ability_datadriven"
+	                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	                "AbilityManaCost" "0"
 	                "AbilityTextureName"            "lich_frost_armor"
 	                "AbilityCastRange" "250"
@@ -85,7 +85,15 @@
 							"Scale"				"1"
 						}
 	                }
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"			"FIELD_INTEGER"
+					"radius"			"400"
+				}
 			}
+	}
 	//End of file build_castle.txt
 
 
@@ -115,6 +123,32 @@
 	                }
 			}
 	//End of file build_farm.txt
+
+
+	//Start of file create_worker.txt
+			"create_worker"
+	        {
+	                "BaseClass" "ability_datadriven"
+	                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	                "AbilityManaCost" "0"
+	
+	                "AbilityTextureName"            "rubick_null_field"
+	                "AbilityCastRange" 				"250"
+	                "AbilityCastPoint"				 "0"
+					"AbilityChannelTime"			"5.0"
+	                "OnChannelSucceeded"
+	                {
+						"RunScript"
+						{
+							"ScriptFile"		"scripts/vscripts/units.lua"
+							"Function"			"createUnit"
+							"Cost"				"50"
+							"Unit"				"worker"
+							"BuildTime"			"5"
+						}
+	                }
+	        }
+	//End of file create_worker.txt
 
 
 	//Start of file destroy_building.txt

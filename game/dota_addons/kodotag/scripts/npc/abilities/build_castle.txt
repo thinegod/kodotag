@@ -1,7 +1,7 @@
 "build_castle"
 {
 		"BaseClass" "ability_datadriven"
-                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT"
+                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
                 "AbilityManaCost" "0"
                 "AbilityTextureName"            "lich_frost_armor"
                 "AbilityCastRange" "250"
@@ -20,6 +20,13 @@
 						"HullRadius" 		"64"	
 						"Scale"				"1"
 					}
-					
                 }
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"400"
+			}
+		}
 }
