@@ -84,14 +84,6 @@
 							"HullRadius" 		"64"	
 							"Scale"				"1"
 						}
-						
-							"RunScript"
-						{
-							"ScriptFile"		"scripts/vscripts/buildings.lua"
-							"Function"			"createCircularTrigger"
-							"Target"			"POINT"
-							"Radius" 			"250"
-						}
 	                }
 			}
 	//End of file build_castle.txt
