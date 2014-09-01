@@ -67,25 +67,21 @@ local playerPos=nil
 	for key,value in ipairs(self.goldMiners) do
 		basePos=Entities:FindByClassnameNearest("npc_dota_base",value.activator:GetAbsOrigin(),10000):GetAbsOrigin()
 		playerPos=value.activator:GetAbsOrigin()
-		goldReturnVal={self.goldMiners[key].activator,self.goldMiners[key].goldMine}
+		goldReturnVal={["player"]=self.goldMiners[key].activator,["goldMine"]=self.goldMiners[key].goldMine}
 		if in_array(self.goldReturn,goldReturnVal) or value.count>=3  then-- this doesnt work properly
 			table.insert(self.goldReturn,goldReturnVal)
 			table.remove(self.goldMiners,key)
-			--if self.goldMiners[key].moveToBaseCommand == nil then
-			--self.goldMiners[key].moveToBaseCommand=true
 			value.activator:MoveToPosition(basePos)
-			--end
 		else
 			self.goldMiners[key].count=self.goldMiners[key].count+GOLD_MINE_THINK_TIME
 		end
 	end
-	for key,player in ipairs(self.goldReturn) do
-		basePos=Entities:FindByClassnameNearest("npc_dota_base",player[1]:GetAbsOrigin(),10000):GetAbsOrigin()
-		playerPos=player[1]:GetAbsOrigin()
-		print ((basePos-playerPos):Length2D())
+	for key,array in ipairs(self.goldReturn) do
+		basePos=Entities:FindByClassnameNearest("npc_dota_base",array.player:GetAbsOrigin(),10000):GetAbsOrigin()
+		playerPos=array.player:GetAbsOrigin()
 		if (basePos-playerPos):Length2D()<200 then
-			player[1]:SetGold(player[1]:GetGold()+self.goldGain,false)
-			player[1]:MoveToPosition(player[2])
+			array.player:SetGold(player[1]:GetGold()+self.goldGain,false)
+			array.player:MoveToPosition(array.goldMine)
 			table.remove(self.goldReturn,key)
 		end
 	end
