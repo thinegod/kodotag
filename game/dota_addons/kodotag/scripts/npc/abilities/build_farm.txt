@@ -6,7 +6,7 @@
                 "AbilityTextureName"            "rubick_spell_steal"
                 "AbilityCastRange" "250"
                 "AbilityCastPoint" "0"
- 
+				
                 "OnSpellStart"
                 {
 					"RunScript"

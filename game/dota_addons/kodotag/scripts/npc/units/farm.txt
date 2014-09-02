@@ -11,11 +11,11 @@
 		// Abilities
 		//----------------------------------------------------------------
 		
-		"Ability1"					"destroy_building"			// Ability 1.
+		"Ability1"					""			// Ability 1.
 		"Ability2"					""			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
+		"Ability5"					"destroy_building"			// Ability 5.
 		"Ability6"					""			// Ability 6 - Extra.
 		"Ability7"					""			// Ability 7 - Extra.
 		"Ability8"					""			// Ability 8 - Extra.
@@ -50,7 +50,6 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"Sell"						"1"			// Gold returned when destroyed by owner.
 		"BountyXP"					"25"		// Experience earn.
 		"BountyGoldMin"				"352"		// Gold earned min.
 		"BountyGoldMax"				"370"		// Gold earned max.
