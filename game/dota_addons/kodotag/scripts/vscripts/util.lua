@@ -7,3 +7,9 @@ function pay(player,cost)
 	end
 	return false
 end
+
+function distance(eA,eB)
+	assert(eA and eB,"distance recieved nil values")
+	return (eA:GetAbsOrigin()-eB:GetAbsOrigin()):Length2D()
+
+end

@@ -23,14 +23,11 @@ function checkType(stuff)
 end
 
 function miningGold(keys)
-	print("Someone is mining")
 	local t = {["activator"]=keys.activator,["count"]=0,["goldMine"]=keys.caller:GetAbsOrigin()}--ska vara positionen av guldgruvan
 	table.insert(GameRules.KodoTagGameMode.goldMiners,t)
-	print(#GameRules.KodoTagGameMode.goldMiners)
 end
 
 function stopMiningGold(keys)
-	print("Someone stopped mining")
 	for i,v in ipairs(GameRules.KodoTagGameMode.goldMiners) do
 		if keys.activator == v.activator then
 			table.remove(GameRules.KodoTagGameMode.goldMiners,i)

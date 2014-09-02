@@ -41,6 +41,7 @@ end
 function KodoTagGameMode:InitGameMode()
 	self.goldMiners={}
 	self.goldReturn={}
+	self._bases={}
 	self.goldGain=10
 	GameRules:SetTimeOfDay( 0.75 )
 	GameRules:SetHeroSelectionTime( 5.0 )
@@ -53,7 +54,6 @@ function KodoTagGameMode:InitGameMode()
 	GameRules:SetGoldTickTime( 60.0 )
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetSameHeroSelectionEnabled(true)
-	--KodoTagGameMode:DisplayBuildingGrids()
 	GameRules:GetGameModeEntity():SetThink("goldGeneration",self,"goldGeneration",GOLD_MINE_THINK_TIME)
 	BuildingHelper:BlockGridNavSquares(16384)
 	--[[local creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
@@ -63,14 +63,32 @@ function KodoTagGameMode:InitGameMode()
 	--GameRules:GetGameModeEntity():SetThink("OnMineGold",self,"MineGold")
 end
 
+function KodoTagGameMode:findClosestBase(unit)
+	if(#self._bases==0) then return nil end
+	if(#self._bases==1) then return self._bases[1] end
+	local base=self._bases[1]
+	local distance=500000
+	for i=1,#self._bases do
+		if distance(self._bases[i],unit)<distance and (self._bases[i]:GetOwner()==unit or self._bases[i]:GetOwner()==unit:GetOwner()) then
+			base=self._bases[i]
+			distance=distance(self._bases[i],unit)
+		end
+	end
+	
+	if base:GetOwner()==unit then
+		return base
+	else
+		return nil
+	end
+
+end
 
 function KodoTagGameMode:goldGeneration()
 local basePos=nil
 local playerPos=nil
-local base=nil
+
 	for key,value in ipairs(self.goldMiners) do
-		base=Entities:FindByClassnameNearest("npc_dota_building",value.activator:GetAbsOrigin(),10000)--this needs to change
-		
+		base=self:findClosestBase()
 		if(base==nil) then
 			if(not value.activator.showNoBaseWarning) then
 				value.activator.showNoBaseWarning=true
@@ -93,7 +111,7 @@ local base=nil
 		end
 	end
 	for key,array in ipairs(self.goldReturn) do
-		base=Entities:FindByClassnameNearest("npc_dota_building",array.player:GetAbsOrigin(),10000)
+		base=self:findClosestBase()
 		basePos=base:GetAbsOrigin()
 		playerPos=array.player:GetAbsOrigin()
 		if (basePos-playerPos):Length2D()<200 and (base:GetOwner()==array.player or base:GetOwner()==array.player:GetOwner()) then

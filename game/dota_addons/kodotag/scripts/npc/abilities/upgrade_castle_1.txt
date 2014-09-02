@@ -19,7 +19,8 @@
 						"Unit"				"castle_2"
 						"BuildTime"			"5"
 						"HullRadius" 		"64"	
-						"Scale"				".45"	
+						"Scale"				".45"
+						"Castle"			"1"
 					}
                 }
         }

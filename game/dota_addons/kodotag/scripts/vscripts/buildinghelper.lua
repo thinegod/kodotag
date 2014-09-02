@@ -272,7 +272,6 @@ function BuildingHelper:AddBuildingToGrid(vPoint, nSize, vOwnersHero)
 	local heroes = HeroList:GetAllHeroes()
 	for i,v in ipairs(heroes) do
 		if v:GetOwner() ~= nil and BH_UNITS[v:GetPlayerID()] ~= true then
-			print('adding unit')
 			self:AddUnit(v)
 		end
 	end
@@ -362,7 +361,9 @@ function BuildingHelper:AddBuilding(building)
 	function building:UpdateHealth(fBuildTime, bScale, fMaxScale)
 		building:SetHealth(1)
 		building.nfBuildTime=fBuildTime
-		building.fTimeBuildingCompleted=GameRules:GetGameTime()+fBuildTime+fBuildTime*.35
+		building.nControllingPlayer=building:GetOwnerEntity():GetPlayerID()
+		--building:SetControllableByPlayer(building.nControllingPlayer,false)
+		building.fTimeBuildingCompleted=GameRules:GetGameTime()+fBuildTime
 		building.nMaxHealth = building:GetMaxHealth()
 		building.nHealthInterval = building.nMaxHealth*1/(fBuildTime/BUILDINGHELPER_THINK)
 		building.bUpdatingHealth = true
@@ -432,6 +433,8 @@ function BuildingHelper:AddBuilding(building)
 				if building:GetHealth() < building.nMaxHealth and GameRules:GetGameTime() <= building.fTimeBuildingCompleted then
 					building:SetHealth(building:GetHealth()+building.nHealthInterval)
 				else
+					building:SetHealth(building.nMaxHealth)
+					building:SetControllableByPlayer(building.nControllingPlayer,true)
 					building.bUpdatingHealth=false
 				end
 			end
