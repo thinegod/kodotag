@@ -1,6 +1,7 @@
 
 
 GOLD_MINE_THINK_TIME=0.2
+
 if KodoTagGameMode == nil then
 	KodoTagGameMode = class({})
 end
@@ -42,6 +43,7 @@ function KodoTagGameMode:InitGameMode()
 	self.goldMiners={}
 	self.goldReturn={}
 	self._bases={}
+	self._zeroGoldArray={}
 	self.goldGain=10
 	GameRules:SetTimeOfDay( 0.75 )
 	GameRules:SetHeroSelectionTime( 5.0 )
@@ -63,19 +65,20 @@ function KodoTagGameMode:InitGameMode()
 	--GameRules:GetGameModeEntity():SetThink("OnMineGold",self,"MineGold")
 end
 
+
 function KodoTagGameMode:findClosestBase(unit)
 	if(#self._bases==0) then return nil end
 	if(#self._bases==1) then return self._bases[1] end
 	local base=self._bases[1]
-	local distance=500000
+	local dist=500000
 	for i=1,#self._bases do
-		if distance(self._bases[i],unit)<distance and (self._bases[i]:GetOwner()==unit or self._bases[i]:GetOwner()==unit:GetOwner()) then
+		if distance(self._bases[i],unit)<dist and (self._bases[i]:GetOwner()==unit or self._bases[i]:GetOwner()==unit:GetOwner()) then
 			base=self._bases[i]
-			distance=distance(self._bases[i],unit)
+			dist=distance(self._bases[i],unit)
 		end
 	end
 	
-	if base:GetOwner()==unit then
+	if dist~=500000 then
 		return base
 	else
 		return nil
@@ -88,19 +91,12 @@ local basePos=nil
 local playerPos=nil
 
 	for key,value in ipairs(self.goldMiners) do
-		base=self:findClosestBase()
-		if(base==nil) then
-			if(not value.activator.showNoBaseWarning) then
-				value.activator.showNoBaseWarning=true
-				--ShowGenericPopupToPlayer(value.activator:GetOwner(),"title","content","","",1)--this only displays an empty box..??
-				GameRules:SendCustomMessage("You cannot mine gold without a nearby base",0,1)
-			end
-			return GOLD_MINE_THINK_TIME
-		end
+		base=value.activator._closestBase
+		if base==nil then return GOLD_MINE_THINK_TIME end
 		basePos=base:GetAbsOrigin()
 		playerPos=value.activator:GetAbsOrigin()
 		goldReturnVal={["player"]=self.goldMiners[key].activator,["goldMine"]=self.goldMiners[key].goldMine}
-		if in_array(self.goldReturn,goldReturnVal) then
+		if false then
 			value.activator:MoveToPosition(basePos)
 		elseif  value.count>=3  then
 			table.insert(self.goldReturn,goldReturnVal)
@@ -111,10 +107,11 @@ local playerPos=nil
 		end
 	end
 	for key,array in ipairs(self.goldReturn) do
-		base=self:findClosestBase()
+		base=array.player._closestBase
+		if base==nil then return GOLD_MINE_THINK_TIME end
 		basePos=base:GetAbsOrigin()
 		playerPos=array.player:GetAbsOrigin()
-		if (basePos-playerPos):Length2D()<200 and (base:GetOwner()==array.player or base:GetOwner()==array.player:GetOwner()) then
+		if (basePos-playerPos):Length2D()<200 and (base:GetOwnerEntity()==array.player or base:GetOwnerEntity()==array.player:GetOwner()) then
 			if (array.player:GetOwner().SetGold==nil) then
 				array.player:SetGold(array.player:GetGold()+self.goldGain,false)
 			else 
@@ -128,28 +125,8 @@ local playerPos=nil
 	return GOLD_MINE_THINK_TIME
 end
 
-function in_array(array,element)--someone make this work..
-return false
-	--[[if(type(element)=="table" and #array>2) then
-		for i=1,#array do
-			for key,value in ipairs(element) do
-				for k,v in ipairs(array[i]) do
-					if(key==k and v~=value) then
-					return false
-					end
-				end
-			end
-		end
-		return true
-	else
-		for i=1,#array do
-			if array[i]==element then
-			return true
-			end
-		end
-		return false
-	end]]
-end
+
+
 function KodoTagGameMode:DisplayBuildingGrids()
   print( '******* Displaying Building Grids ***************' )
   local cmdPlayer = Convars:GetCommandClient()

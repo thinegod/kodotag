@@ -3,8 +3,10 @@
 		"override_hero"				"npc_dota_hero_templar_assassin"			// Hero to override
 		"Ability1"					"build_barricade"		// Ability 1
 		"Ability2"					"build_basic_tower"		// Ability 2
-		"Ability3"					"build_farm"			// Ability 3
+		"Ability3"					"damage"			// Ability 3
 		"Ability4"					"build_castle"			// Ability 4
+		"Ability5"					"repair"  			//
+		"Ability6"					"build_farm"
 		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
 	}

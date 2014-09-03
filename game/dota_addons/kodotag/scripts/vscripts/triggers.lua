@@ -1,40 +1,32 @@
-
+require("util")
 
 function startArea(keys)
-		print (keys.activator:GetGold())-- wat is dis
+
+	if(not in_array(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)) then
+		keys.activator:SetGold(0,false)
+		for i=1,4 do
+			keys.activator:HeroLevelUp(false)
+		end
+		table.insert(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)
+	end
 end
 
-
-
-
-function checkKeys(keys)
-        for key, value in pairs(keys) do
-                print (key,value)
-                checkType(value)
-        end
-end    
-function checkType(stuff)
-        if (type(stuff)=="table") then
-                for k, v in pairs(stuff) do
-                        print(k,v)
-                        checkType(v)
-                end
-        end
-end
-
-function miningGold(keys)
-	local t = {["activator"]=keys.activator,["count"]=0,["goldMine"]=keys.caller:GetAbsOrigin()}--ska vara positionen av guldgruvan
+function miningGold(keys)	
+	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
+	if(base==nil) then
+		--ShowGenericPopupToPlayer(value.activator:GetOwner(),"title","content","","",1)--this only displays an empty box..??
+		GameRules:SendCustomMessage("You cannot mine gold without a nearby base",0,1)
+	else 
+		keys.activator._closestBase=base
+	end
+	local t = {["activator"]=keys.activator,["count"]=0,["goldMine"]=keys.caller:GetAbsOrigin()}
 	table.insert(GameRules.KodoTagGameMode.goldMiners,t)
 end
 
 function stopMiningGold(keys)
-	for i,v in ipairs(GameRules.KodoTagGameMode.goldMiners) do
-		if keys.activator == v.activator then
-			table.remove(GameRules.KodoTagGameMode.goldMiners,i)
-			return nil
-		end
-	end
-	
+	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
+	keys.activator._closestBase=base
+	removeFromArray(GameRules.KodoTagGameMode.goldMiners,keys.activator)
 end
 
 function testTest(keys)
@@ -45,15 +37,5 @@ function testTest(keys)
 
 end
 
-function PrintSquare(v,size)
-			DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
-			DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x-size,v.y-size,BH_Z), 255, 0, 0, false, 30)
-			DebugDrawLine(Vector(v.x-size,v.y-size,BH_Z), Vector(v.x+size,v.y-size,BH_Z), 255, 0, 0, false, 30)
-			DebugDrawLine(Vector(v.x+size,v.y-size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
-end
-
-function PrintCircle(v,radius)
-		DebugDrawCircle(v,Vector(255,0,0),BH_Z,radius,false,60)
-end
 
 

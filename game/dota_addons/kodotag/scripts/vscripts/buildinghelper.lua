@@ -403,7 +403,7 @@ function BuildingHelper:AddBuilding(building)
 						BUILDING_SQUARES[v]=nil
 						removeCount=removeCount+1
 						if bKill then
-							building:SetAbsOrigin(Vector(center.x,center.y,center.z-200))
+							building:SetAbsOrigin(Vector(center.x,center.y,center.z-500))
 							building:ForceKill(true)
 						end
 					end

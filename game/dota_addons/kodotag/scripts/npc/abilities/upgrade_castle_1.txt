@@ -14,13 +14,12 @@
 					{
 						"ScriptFile"		"scripts/vscripts/buildings.lua"
 						"Function"			"upgradeBuilding"
-						"Target"			"CASTER"
 						"Cost"				"2"
 						"Unit"				"castle_2"
 						"BuildTime"			"5"
 						"HullRadius" 		"64"	
 						"Scale"				".45"
-						"Castle"			"1"
+						"Castle"			"true"
 					}
                 }
         }

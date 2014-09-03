@@ -1,3 +1,4 @@
+
 function createBuilding(keys)
 	local point = BuildingHelper:AddBuildingToGrid(keys.target_points[1], 2, keys.caster)
 	-- Create model and do general initiation.
@@ -12,11 +13,9 @@ function createBuilding(keys)
 				building:SetInvulnCount(0)
 			end
 			building.Cost = keys.Cost
-			print(keys.Castle)
-			print(keys.Castle)
 			if keys.Castle then
-				print("added base")
 				table.insert(GameRules.KodoTagGameMode._bases,building)
+				building._castle=true
 			end
 		end
 	else
@@ -26,37 +25,59 @@ end
 function destroyBuilding(keys)
 	local owner=keys.caster:GetOwnerEntity()
 	if(keys.caster._castle) then 
-		for i=1,#GameRules.KodoTagGameMode._bases do
-			if(keys.caster==GameRules.KodoTagGameMode._bases[i]) then
-				print("removed base")
-				table.remove(GameRules.KodoTagGameMode._bases,i)
-			end
-		end
+		removeFromArray(GameRules.KodoTagGameMode._bases,keys.caster)
 	end
 	owner:SetGold(owner:GetGold()+keys.caster.Cost/2,false)
-	keys.caster:RemoveBuilding(64,true)
+	keys.caster:RemoveBuilding(2,true)
 end
 
 function upgradeBuilding(keys)
 	local owner=keys.caster:GetOwnerEntity()
+	local loc = keys.caster:GetAbsOrigin()
 	if owner:GetGold()-keys.Cost >= 0 then
 		owner:SetGold(owner:GetGold()-keys.Cost,false)
 		local oldcost=keys.caster.Cost
-		keys.caster:RemoveBuilding(64,true)
-		local building = CreateUnitByName(keys.Unit, keys.target_points[1], false, nil, keys.caster:GetOwnerEntity(), owner:GetTeam())
+		local building = CreateUnitByName(keys.Unit, loc, false, nil, keys.caster:GetOwnerEntity(), owner:GetTeam())
+		if keys.Castle then
+			removeFromArray(GameRules.KodoTagGameMode._bases,keys.caster)
+			table.insert(GameRules.KodoTagGameMode._bases,building)
+			building._castle=true
+		end
+		keys.caster:RemoveBuilding(2,true)
+		BuildingHelper:AddBuildingToGrid(loc, 2, owner)
 		BuildingHelper:AddBuilding(building)
 		building:UpdateHealth(keys.BuildTime,true,keys.Scale)
 		building:SetHullRadius(keys.HullRadius)
-		building:SetInvulnCount(0)
+		if building.SetInvulnCount ~=nil then
+			building:SetInvulnCount(0)
+		end
 		building:SetOwner(owner)
 		building.Cost=keys.Cost+oldcost
-		if keys.Castle=="1" then
-			table.insert(GameRules.KodoTagGameMode._bases,building)
-			print("added base")
-			building._castle=true
-		end
+
 	end
 end
 
+function continueRepair(keys)
+	local playerId 
+	if(keys.caster.GetPlayerID==nil) then
+		playerId=keys.caster:GetOwner():GetPlayerID()
+	else 
+		playerId=keys.caster:GetPlayerID()
+	end
+	keys.caster:CastAbilityOnTarget(keys.target,keys.caster:FindAbilityByName("repair"),playerId)
+end
+
+function attemptRepair(keys)
+	local building=keys.target
+	local hp=keys.HealAmount
+	local cost=hp/building:GetMaxHealth()*building.Cost
+	if (building:GetOwnerEntity()==keys.caster or building:GetOwnerEntity()==keys.caster:GetOwner()) and pay(keys.caster,cost) 
+	and building:GetHealth()<building:GetMaxHealth() then
+	--do nothing
+		
+	else
+		keys.caster:Stop()
+	end	
+end
 
 
