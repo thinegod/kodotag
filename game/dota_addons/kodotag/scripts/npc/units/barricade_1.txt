@@ -49,6 +49,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
+		"ItemCost"					"888"
+		"Invested"					"7567"		// 
 		"BountyXP"					"25"		// Experience earn.
 		"BountyGoldMin"				"102"		// Gold earned min.
 		"BountyGoldMax"				"120"		// Gold earned max.
