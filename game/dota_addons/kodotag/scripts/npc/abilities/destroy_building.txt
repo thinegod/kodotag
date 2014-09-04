@@ -7,7 +7,6 @@
                 "AbilityTextureName"            "axe_culling_blade"
                 "AbilityCastRange" "250"
                 "AbilityCastPoint" "0"
-				"Invested"			"CASTER.COST"
 					"OnSpellStart"
 					{
 						"RunScript"
