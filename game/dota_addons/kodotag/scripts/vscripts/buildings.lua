@@ -12,7 +12,7 @@ function createBuilding(keys)
 			if building.SetInvulnCount ~=nil then
 				building:SetInvulnCount(0)
 			end
-			building.Cost = keys.Cost
+			building.investreturn = keys.Cost/2
 			if keys.Castle then
 				table.insert(GameRules.KodoTagGameMode._bases,building)
 				building._castle=true
@@ -27,7 +27,7 @@ function destroyBuilding(keys)
 	if(keys.caster._castle) then 
 		removeFromArray(GameRules.KodoTagGameMode._bases,keys.caster)
 	end
-	owner:SetGold(owner:GetGold()+keys.caster.Cost/2,false)
+	owner:SetGold(owner:GetGold()+keys.caster.investreturn,false)
 	keys.caster:RemoveBuilding(2,true)
 end
 
@@ -36,7 +36,7 @@ function upgradeBuilding(keys)
 	local loc = keys.caster:GetAbsOrigin()
 	if owner:GetGold()-keys.Cost >= 0 then
 		owner:SetGold(owner:GetGold()-keys.Cost,false)
-		local oldcost=keys.caster.Cost
+		local oldinvest=keys.caster.investreturn
 		local building = CreateUnitByName(keys.Unit, loc, false, nil, keys.caster:GetOwnerEntity(), owner:GetTeam())
 		if keys.Castle then
 			removeFromArray(GameRules.KodoTagGameMode._bases,keys.caster)
@@ -52,7 +52,7 @@ function upgradeBuilding(keys)
 			building:SetInvulnCount(0)
 		end
 		building:SetOwner(owner)
-		building.Cost=keys.Cost+oldcost
+		building.investreturn=keys.Cost/2+oldinvest
 
 	end
 end
