@@ -17,7 +17,7 @@
 			"Cost"				"0"
 			"Unit"				"barricade_1"
 			"BuildTime"			"1.0"
-			"HullRadius" 		"64"	
+			"HullRadius" 		"2"	
 			"Scale"				".85"	
 		}
 	}

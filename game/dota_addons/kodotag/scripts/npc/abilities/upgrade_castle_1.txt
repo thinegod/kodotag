@@ -17,7 +17,7 @@
 						"Cost"				"2"
 						"Unit"				"castle_2"
 						"BuildTime"			"5"
-						"HullRadius" 		"64"	
+						"HullRadius" 		"4"	
 						"Scale"				".45"
 						"Castle"			"true"
 					}

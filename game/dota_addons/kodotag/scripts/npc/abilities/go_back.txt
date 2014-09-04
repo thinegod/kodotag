@@ -1,0 +1,49 @@
+"go_back"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityManaCost" 				"0"
+	"AbilityTextureName"            "ember_spirit_activate_fire_remnant"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint" 				"0"
+	"AbilityCooldown"				"0"
+	"MaxLevel"						"1"
+
+
+
+	"OnSpellStart"
+	{
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_barricade"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_castle"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_basic_tower"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_farm"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"go_back"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"addAbility"
+			"Ability"			"build,damage,repair"
+		}
+	}
+}

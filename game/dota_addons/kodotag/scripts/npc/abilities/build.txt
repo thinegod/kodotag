@@ -1,0 +1,42 @@
+"build"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityManaCost" 				"0"
+	"AbilityTextureName"            "ogre_magi_fireblast"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint" 				"0"
+	"AbilityCooldown"				"0"
+	"MaxLevel"						"1"
+	
+	"OnSpellStart"
+	{
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"damage"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"repair"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"addAbility"
+			"Ability"			"build_barricade,build_castle,build_basic_tower,build_farm,go_back"
+		}
+
+		
+		
+	}
+
+			
+}
