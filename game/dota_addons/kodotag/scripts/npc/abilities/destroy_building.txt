@@ -7,14 +7,14 @@
                 "AbilityTextureName"            "axe_culling_blade"
                 "AbilityCastRange" "250"
                 "AbilityCastPoint" "0"
-				
-                "OnSpellStart"
-                {
-					"RunScript"
+				"Invested"			"CASTER.COST"
+					"OnSpellStart"
 					{
-						"ScriptFile"		"scripts/vscripts/buildings.lua"
-						"Function"			"destroyBuilding"
-						"Target"			"CASTER"						
+						"RunScript"
+						{
+							"ScriptFile"		"scripts/vscripts/buildings.lua"
+							"Function"			"destroyBuilding"
+							"Target"			"CASTER"
+						}
 					}
-                }
         }
