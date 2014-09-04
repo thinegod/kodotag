@@ -14,7 +14,7 @@ end
 function miningGold(keys)	
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
 	if(base==nil) then
-		--ShowGenericPopupToPlayer(value.activator:GetOwner(),"title","content","","",1)--this only displays an empty box..??
+		--ShowGenericPopupToPlayer(value.activator:GetOwner(),"title","content","123","456",1)--this only displays an empty box..??
 		GameRules:SendCustomMessage("You cannot mine gold without a nearby base",0,1)
 	else 
 		keys.activator._closestBase=base

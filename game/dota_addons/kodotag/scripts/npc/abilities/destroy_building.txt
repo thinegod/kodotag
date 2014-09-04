@@ -3,18 +3,18 @@
                 "BaseClass" "ability_datadriven"
                 "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
                 "AbilityManaCost" "0"
- 
                 "AbilityTextureName"            "axe_culling_blade"
                 "AbilityCastRange" "250"
                 "AbilityCastPoint" "0"
-				"Invested"			"CASTER.COST"
-					"OnSpellStart"
+				
+				"OnSpellStart"
+				{
+					"RunScript"
 					{
-						"RunScript"
-						{
-							"ScriptFile"		"scripts/vscripts/buildings.lua"
-							"Function"			"destroyBuilding"
-							"Target"			"CASTER"
-						}
+						"ScriptFile"		"scripts/vscripts/buildings.lua"
+						"Function"			"destroyBuilding"
+						"Target"			"CASTER"
 					}
+				}
+					
         }
