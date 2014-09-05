@@ -1,0 +1,59 @@
+"repair"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"					"repair"
+	"AbilityTextureName"			"tinker_rearm"												
+	"MaxLevel"						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+
+	// Unit Targeting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"200"
+	"AbilityCastPoint"				"0.5"
+	"AbilityCooldown"				"0.5"
+	"AbilityManaCost"				"0"
+	"AbilityChannelTime"			"0.5"
+	
+	"AbilitySpecial"
+    {
+        "01"
+        {
+			"var_type"		"FIELD_INTEGER"
+			"HealAmount"	"10"
+		}
+		
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/buildings.lua"
+			"Function"			"attemptRepair"
+			"HealAmount"		"%HealAmount"
+		}
+
+	}
+	"OnChannelSucceeded"
+	 {
+	 	"Heal"
+		{
+			"HealAmount"	"%HealAmount"
+			"Target"		"TARGET"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/buildings.lua"
+			"Function"			"continueRepair"
+		}
+	 }
+	
+}

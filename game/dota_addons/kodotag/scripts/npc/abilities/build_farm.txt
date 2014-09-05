@@ -17,7 +17,7 @@
 			"Cost"				"50"
 			"Unit"				"farm"
 			"BuildTime"			"1.0"
-			"HullRadius" 		"64"	
+			"HullRadius" 		"2"	
 			"Scale"				"3"
 		}
 	}

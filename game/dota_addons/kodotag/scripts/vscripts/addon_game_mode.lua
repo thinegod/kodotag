@@ -67,12 +67,15 @@ end
 
 
 function KodoTagGameMode:findClosestBase(unit)
+	PrintTable(unit:GetOwner())
+	print("=*SQAGDSAHGFDDASGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGH")
+	PrintTable(unit:GetOwnerEntity())
 	if(#self._bases==0) then return nil end
 	if(#self._bases==1) then return self._bases[1] end
 	local base=self._bases[1]
 	local dist=500000
 	for i=1,#self._bases do
-		if distance(self._bases[i],unit)<dist and (self._bases[i]:GetOwner()==unit or self._bases[i]:GetOwner()==unit:GetOwner()) then
+		if distance(self._bases[i],unit)<dist and isAbsoluteParent(unit,self._bases[i]:GetOwner())--[[(self._bases[i]:GetOwner()==unit or self._bases[i]:GetOwner()==unit:GetOwner())]] then
 			base=self._bases[i]
 			dist=distance(self._bases[i],unit)
 		end
@@ -111,12 +114,13 @@ local playerPos=nil
 		if base==nil then return GOLD_MINE_THINK_TIME end
 		basePos=base:GetAbsOrigin()
 		playerPos=array.player:GetAbsOrigin()
-		if (basePos-playerPos):Length2D()<200 and (base:GetOwnerEntity()==array.player or base:GetOwnerEntity()==array.player:GetOwner()) then
-			if (array.player:GetOwner().SetGold==nil) then
-				array.player:SetGold(array.player:GetGold()+self.goldGain,false)
-			else 
-				array.player:GetOwner():SetGold(array.player:GetOwner():GetGold()+self.goldGain,false)
-			end
+		if (basePos-playerPos):Length2D()<200 and isAbsoluteParent(array.player,base:GetOwnerEntity())--[[(base:GetOwnerEntity()==array.player or base:GetOwnerEntity()==array.player:GetOwner())]] then
+			-- if (array.player:GetOwner().SetGold==nil) then
+				-- array.player:SetGold(array.player:GetGold()+self.goldGain,false)
+			-- else 
+				-- array.player:GetOwner():SetGold(array.player:GetOwner():GetGold()+self.goldGain,false)
+			-- end
+			base:GetOwnerEntity():SetGold(base:GetOwnerEntity():GetGold()+self.goldGain,false)
 			--EmitSoundOnClient("sounds/bagdrop.vsnd_c", array.player:GetOwner()) This needs fixing
 			array.player:MoveToPosition(array.goldMine)
 			table.remove(self.goldReturn,key)

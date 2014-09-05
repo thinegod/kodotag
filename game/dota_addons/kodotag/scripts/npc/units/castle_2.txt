@@ -17,7 +17,7 @@
 		"Ability5"					"destroy_building"			// Ability 5.
 		"Ability6"					""			// Ability 6 - Extra.
 		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
+		"Ability8"					"building_cleanup"			// Ability 8 - Extra.
 
 		// Armor
 		//----------------------------------------------------------------

@@ -1,0 +1,48 @@
+"create_worker"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityManaCost" 				"0"
+	"AbilityTextureName"            "rubick_null_field"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint"				"0"
+	"AbilityChannelTime"			"5.0"
+	"AbilityCooldown"				"5.0"
+	
+	"AbilitySpecial"
+    {
+        "01"
+        {
+			"var_type"		"FIELD_INTEGER"
+			"cost"	"50"
+		}
+		
+	}
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/units.lua"
+			"Function"			"attemptCreateUnit"
+			"Cost"				"%cost"
+		}
+	}
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/units.lua"
+			"Function"			"createUnit"
+			"Unit"				"worker"
+		}
+	}
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"reimburse"
+			"Cost"				"%cost"
+		}
+	}
+}

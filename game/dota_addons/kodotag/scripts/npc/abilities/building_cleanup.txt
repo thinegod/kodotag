@@ -1,0 +1,17 @@
+"building_cleanup"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityManaCost" 				"0"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint"				"0"
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/buildings.lua"
+			"Function"			"buildingCleanup"
+		}
+	}
+}

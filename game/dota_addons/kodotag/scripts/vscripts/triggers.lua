@@ -4,9 +4,12 @@ function startArea(keys)
 
 	if(not in_array(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)) then
 		keys.activator:SetGold(0,false)
-		for i=1,4 do
-			keys.activator:HeroLevelUp(false)
-		end
+		--removeAllAbilities(keys.activator)
+		upgradeAllAbilities(keys.activator)
+		-- for i=1,4 do
+			-- keys.activator:HeroLevelUp(false)
+		-- end
+		
 		table.insert(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)
 	end
 end
@@ -32,7 +35,7 @@ end
 function testTest(keys)
 	print("fdgsdfgsfgdhfgd")
 	--PrintCircle(keys.target_points[1],keys.Radius)
-	checkKeys(keys)
+	PrintTable(keys)
 	--PrintSquare(keys.target_points[1],keys.Size)
 
 end
