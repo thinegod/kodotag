@@ -14,7 +14,7 @@
 		//----------------------------------------------------------------
 		
 		"Ability1"					"repair"			// Ability 1.
-		"Ability2"					""			// Ability 2.
+		"Ability2"					"chop_wood"			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
 		"Ability5"					""			//dont change this without changing the ABILITY_INDEX_REPAIR variable in buildings.lua and worker

@@ -9,8 +9,10 @@ end
 
 function attemptCreateUnit(keys)
 	if pay(keys.caster:GetOwner(),keys.Cost) then
+		keys.caster._couldAfford=true
 		--do nothing
 	else
+		keys.caster._couldAfford=nil
 		keys.caster:Stop()
 		--display something to inform user cant afford unit
 	end

@@ -13,6 +13,20 @@ function pay(unit,cost)
 	end
 	return false
 end
+
+function payWood(unit,cost)
+	local player
+	if(unit.GetGold==nil) then
+		player=unit:GetOwner()
+	else
+		player=unit
+	end
+	if (player.wood-cost >= 0) then
+		player.wood=player.wood-cost
+		return true
+	end
+	return false
+end
 function addAbility(keys)
 	if(string.find(keys.Ability,",")==nil) then 
 		keys.caster:AddAbility(keys.Ability)
@@ -142,7 +156,10 @@ function reimburse(keys)
 		-- print(k)
 		-- print(v)
 	-- end
-	absParent:SetGold(absParent:GetGold()+keys.Cost,false)
+	if(keys.caster._couldAfford) then
+		absParent:SetGold(absParent:GetGold()+keys.Cost,false)
+		keys.caster._couldAfford=nil
+	end
 end
 function isAbsoluteParent(child,parent)
 	if (child==nil) then

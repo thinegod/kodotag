@@ -26,6 +26,11 @@
 			"Target"			"CASTER"
 			"AbilityName"		"build"
 		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"chop_wood"
+		}
 		
 		"RunScript"
 		{

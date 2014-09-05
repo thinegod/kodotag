@@ -2,9 +2,9 @@
 	{
 		"override_hero"				"npc_dota_hero_invoker"			// Hero to override
 		"Ability1"					"build"				// Ability 1
-		"Ability2"					"damage"			// Ability 2
+		"Ability2"					"chop_wood"			// Ability 2
 		"Ability3"					"repair"			// Ability 3
-		"Ability4"					""			// Ability 4
+		"Ability4"					"damage"			// Ability 4
 		"Ability5"					""			// Ability 5
 		"Ability6"					""			// Ability 6
 		// "Ability4"					"build_barricade"		// Ability 1
