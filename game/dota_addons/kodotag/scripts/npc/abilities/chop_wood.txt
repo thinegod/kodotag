@@ -1,0 +1,26 @@
+"chop_wood"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"					"chop_wood"
+	"AbilityTextureName"			"axe_culling_blade"												
+	"MaxLevel"						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+	
+		"AbilityCastRange"				"150"
+	"AbilityCastPoint"				"0.5"
+	"AbilityCooldown"				"0.5"
+	"AbilityManaCost"				"0"
+	"AbilityChannelTime"			"3"
+	"OnChannelSucceeded"
+	{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/triggers.lua"
+				"Function"			"chopWood"
+			}
+	}
+
+
+}
