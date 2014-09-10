@@ -1,5 +1,5 @@
 "AddonInfo"
 {
      maps			"kodotag"
-     "IsPlayable"	"0"
+     "IsPlayable"	"1"
 }

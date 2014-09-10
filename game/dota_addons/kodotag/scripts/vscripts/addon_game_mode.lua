@@ -43,7 +43,7 @@ function Activate()
 end
 
 function KodoTagGameMode:InitGameMode()
-	self.goldMiners={}
+	self.goldMines={}
 	self.returnStuff={}
 	self._bases={}
 	self._zeroGoldArray={}
@@ -87,9 +87,7 @@ end
 function KodoTagGameMode:OnThink()
 	for _,val in ipairs(GameRules.KodoTagGameMode._zeroGoldArray) do
 		FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,0})
-		print("updated resourcePanel")
 	end
-	print("thinking")
 	return 0.25
 	
 end
@@ -122,20 +120,26 @@ function KodoTagGameMode:goldMineAutomation()
 local basePos=nil
 local playerPos=nil
 local base=nil
-	for key,value in ipairs(self.goldMiners) do
-		base=value._closestBase
-		if base==nil then return nil end
-		basePos=base:GetAbsOrigin()
-		playerPos=value:GetAbsOrigin()
-		if false then
-			value:MoveToPosition(basePos)
-		elseif  value.count>=GOLD_MINE_TIME  then
-			table.insert(self.returnStuff,value)
-			value._goldReturn=true
-			table.remove(self.goldMiners,key)
-			value:MoveToPosition(basePos)
-		else
-			self.goldMiners[key].count=self.goldMiners[key].count+GATHER_THINK_TIME
+	for _,value in ipairs(self.goldMines) do
+		if(#value.goldMiners>0) then
+			if(not value._mining) then
+				ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_coin_shape.vpcf",PATTACH_ABSORIGIN_FOLLOW,value.goldMiners[1])
+				value.lastPos=value.goldMiners[1]:GetAbsOrigin()
+				value.goldMiners[1]:AddNoDraw()
+				value.goldMiners[1]:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+				value.count=0
+				value._mining=true
+			elseif(value.count>=2) then
+				value.goldMiners[1]:RemoveNoDraw()
+				value.goldMiners[1]:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+				value._mining=false
+				table.insert(self.returnStuff,value.goldMiners[1])
+				value.goldMiners[1]._goldReturn=true
+				value.goldMiners[1]:MoveToPosition(value.goldMiners[1]._closestBase:GetAbsOrigin())
+				table.remove(value.goldMiners,1)
+			else
+				value.count=value.count+GATHER_THINK_TIME
+			end
 		end
 	end
 end
@@ -167,8 +171,6 @@ local returnPos=nil
 					base:GetOwnerEntity().wood=base:GetOwnerEntity().wood+self.woodGain
 					
 				end
-				print("tree amount:")
-				print(base:GetOwnerEntity().wood)
 			end
 			--EmitSoundOnClient("sounds/bagdrop.vsnd_c", unit:GetOwner()) This needs fixing
 			

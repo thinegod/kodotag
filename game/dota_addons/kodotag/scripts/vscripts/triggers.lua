@@ -1,5 +1,5 @@
 require("util")
-WOOD_COUNT=30
+WOOD_COUNT=20
 function startArea(keys)
 	if(keys.activator:IsHero() and not in_array(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)) then
 		keys.activator:SetGold(0,false)
@@ -23,22 +23,29 @@ function startArea(keys)
 end
 
 function miningGold(keys)	
-	ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_coin_shape.vpcf",PATTACH_ABSORIGIN_FOLLOW,keys.activator)
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
+	keys.activator:Stop()
 	if(base==nil) then
 		FireGameEvent("custom_error_show",{player_ID=getAbsoluteParent(keys.activator):GetPlayerID(),_error="You cannot mine gold without a nearby base"})
+		return nil
 	else 
 		keys.activator._closestBase=base
 	end
-	keys.activator._lastGoldMinePos=keys.caller:GetAbsOrigin()--this could be an entity if we give the gold mine a model
+	if(not in_array(GameRules.KodoTagGameMode.goldMines,keys.caller)) then
+		table.insert(GameRules.KodoTagGameMode.goldMines,keys.caller)
+		keys.caller.goldMiners={}
+	end
+	keys.activator._lastGoldMinePos=keys.caller:GetAbsOrigin()
 	keys.activator.count=0
-	table.insert(GameRules.KodoTagGameMode.goldMiners,keys.activator)
+	table.insert(keys.caller.goldMiners,keys.activator)
 end
 
 function stopMiningGold(keys)
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
 	keys.activator._closestBase=base
-	removeFromArray(GameRules.KodoTagGameMode.goldMiners,keys.activator)
+	if(in_array(keys.caller.goldMiners,keys.activator)) then
+		removeFromArray(keys.caller.goldMiners,keys.activator)
+	end
 end
 
 function chopWood(keys)
@@ -56,14 +63,25 @@ function chopWood(keys)
 		keys.target._woodCount=keys.target._woodCount-woodGain
 	if (keys.target._woodCount<=0) then
 		local pos=keys.target:GetAbsOrigin()
-		keys.target:SetAbsOrigin(Vector(0,0,-500))
-		local newTree=Entities:FindByClassnameNearest("ent_dota_tree",pos,1000)
+		keys.target:CutDown(DOTA_GC_TEAM_GOOD_GUYS)
+		local newTree=nil
+		for _,v in ipairs(Entities:FindAllByClassnameWithin("ent_dota_tree",pos,600))do
+			if(v:IsStanding()) then
+				newTree=v
+			end
+		end
+		if(newTree==nil)then return nil end
+		if(newTree.treeChoppers==nil) then
+			newTree.treeChoppers={}
+		end
 		for k,val in ipairs(keys.target.treeChoppers) do
 			val._tree=newTree
-			table.insert(newTree,val)
+			table.insert(newTree.treeChoppers,val)
+			if(not in_array(GameRules.KodoTagGameMode.returnStuff,val))then
+				val:CastAbilityOnTarget(val._tree,val:FindAbilityByName("chop_wood"),getAbsoluteParent(val):GetPlayerID())
+			end
 		end
-		keys.target:SetAbsOrigin(pos)
-		keys.target:CutDown(DOTA_GC_TEAM_GOOD_GUYS)
+		
 	end
 	keys.caster._woodReturn=true
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.caster)
