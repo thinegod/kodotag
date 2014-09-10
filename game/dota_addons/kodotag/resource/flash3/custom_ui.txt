@@ -10,6 +10,22 @@
 	//	"File"		"Example"
 	//	"Depth"		"50"
 	//}
+	
+		"1"
+	{
+		"File"		"CustomError"
+		"Depth"		"50"
+	}
+	"2"
+	{
+		"File"		"VotePanel"
+		"Depth"		"50"
+	}
+	"3"
+	{
+		"File"		"ResourcePanel"
+		"Depth"		"50"
+	}
 }
 
 // =============================================
