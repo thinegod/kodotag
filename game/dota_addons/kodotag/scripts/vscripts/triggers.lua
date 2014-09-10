@@ -1,9 +1,9 @@
 require("util")
-
+WOOD_COUNT=30
 function startArea(keys)
-
-	if(not in_array(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)) then
+	if(keys.activator:IsHero() and not in_array(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)) then
 		keys.activator:SetGold(0,false)
+			FireGameEvent("start_vote",{player_ID=keys.activator:GetPlayerID()})
 		--removeAllAbilities(keys.activator)
 		-- keys.activator:AddAbility("build")
 		-- keys.activator:FindAbilityByName("build"):UpgradeAbility()
@@ -23,10 +23,10 @@ function startArea(keys)
 end
 
 function miningGold(keys)	
+	ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_coin_shape.vpcf",PATTACH_ABSORIGIN_FOLLOW,keys.activator)
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
 	if(base==nil) then
-		--ShowGenericPopupToPlayer(value.activator:GetOwner(),"title","content","123","456",1)--this only displays an empty box..??
-		GameRules:SendCustomMessage("You cannot mine gold without a nearby base",0,1)
+		FireGameEvent("custom_error_show",{player_ID=getAbsoluteParent(keys.activator):GetPlayerID(),_error="You cannot mine gold without a nearby base"})
 	else 
 		keys.activator._closestBase=base
 	end
@@ -44,21 +44,37 @@ end
 function chopWood(keys)
 	local woodGain=GameRules.KodoTagGameMode.woodGain
 	keys.caster._tree=keys.target
+	if(keys.target.treeChoppers==nil) then
+		keys.target.treeChoppers={}
+	end
+	if(not in_array(keys.target.treeChoppers,keys.caster)) then
+		table.insert(keys.target.treeChoppers,keys.caster)
+	end
 	if(keys.target._woodCount==nil) then
-		keys.target._woodCount=30
+		keys.target._woodCount=WOOD_COUNT
 	end
 		keys.target._woodCount=keys.target._woodCount-woodGain
 	if (keys.target._woodCount<=0) then
 		local pos=keys.target:GetAbsOrigin()
 		keys.target:SetAbsOrigin(Vector(0,0,-500))
-		keys.caster._tree=Entities:FindByClassnameNearest("ent_dota_tree",pos,600)
+		local newTree=Entities:FindByClassnameNearest("ent_dota_tree",pos,1000)
+		for k,val in ipairs(keys.target.treeChoppers) do
+			val._tree=newTree
+			table.insert(newTree,val)
+		end
 		keys.target:SetAbsOrigin(pos)
 		keys.target:CutDown(DOTA_GC_TEAM_GOOD_GUYS)
 	end
 	keys.caster._woodReturn=true
-	keys.caster._closestBase=GameRules.KodoTagGameMode:findClosestBase(keys.caster)
-	table.insert(GameRules.KodoTagGameMode.returnStuff,keys.caster)
-	keys.caster:MoveToPosition(keys.caster._closestBase:GetAbsOrigin())
+	local base=GameRules.KodoTagGameMode:findClosestBase(keys.caster)
+	if(base==nil) then
+		FireGameEvent("custom_error_show",{player_ID=getAbsoluteParent(keys.caster):GetPlayerID(),_error="You cannot chop wood without a nearby base"})
+	else
+		keys.caster._closestBase=base
+		table.insert(GameRules.KodoTagGameMode.returnStuff,keys.caster)
+		keys.caster:MoveToPosition(keys.caster._closestBase:GetAbsOrigin())
+	end
+
 	
 end
 function testTest(keys)

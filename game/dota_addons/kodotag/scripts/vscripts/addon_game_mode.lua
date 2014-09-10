@@ -19,16 +19,19 @@ function Precache( context )
 			PrecacheResource( "particle", "*.vpcf", context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
-	
-	PrecacheUnitByNameAsync("worker",context)
-	PrecacheUnitByNameAsync("barricade_1",context)
-	PrecacheUnitByNameAsync("barricade_2",context)
+	PrecacheUnitByNameSync("worker",context)
+	PrecacheUnitByNameSync("barricade_1",context)
+	PrecacheUnitByNameSync("barricade_2",context)
 	PrecacheResource("ranged_tower_good","particles/folder",context)
 	PrecacheResource("coins.vsnd","sounds/ui",context)
-	PrecacheUnitByNameAsync("basic_tower",context)
-	PrecacheUnitByNameAsync("farm",context)
-	PrecacheUnitByNameAsync("castle_1",context)
-	PrecacheUnitByNameAsync("castle_2",context)
+	PrecacheUnitByNameSync("basic_tower",context)
+	PrecacheUnitByNameSync("farm",context)
+	PrecacheUnitByNameSync("castle_1",context)
+	PrecacheUnitByNameSync("castle_2",context)
+	PrecacheResource("particle","particles/generic_gameplay/lasthit_coins.vpcf",context)
+	PrecacheResource("particle","particles/items2_fx/hand_of_midas_coin_shape.vpcf",context)
+	PrecacheResource("particle_folder","particles/units/heroes/hero_jakiro",context)
+	
 	--PrecacheModel("npc_dota_creature_gnoll_assassin",context)
 end
 
@@ -44,6 +47,7 @@ function KodoTagGameMode:InitGameMode()
 	self.returnStuff={}
 	self._bases={}
 	self._zeroGoldArray={}
+	self._voteTable={Noob=0,Easy=0,Normal=0,Hard=0,Extreme=0}
 	self.goldGain=10
 	self.woodGain=10
 	GameRules:SetTimeOfDay( 0.75 )
@@ -58,8 +62,11 @@ function KodoTagGameMode:InitGameMode()
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetThink("gatherThinker",self,"gatherThinker",GATHER_THINK_TIME)
+	GameRules:GetGameModeEntity():SetThink("OnThink",self,"OnThink",0.25)
 	BuildingHelper:BlockGridNavSquares(16384)
-	GameRules:SetTreeRegrowTime(932458);
+	GameRules:SetTreeRegrowTime(932458)
+	ListenToGameEvent("entity_killed",Dynamic_Wrap(KodoTagGameMode,"OnEntityKilled"),self)
+	Convars:RegisterCommand("difficultyVote",function(...) return self:difficultyVote(...) end,"difficultyVote",0)
 	--[[local creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
 	creature:SetInitialGoalEntity(  Entities:FindByName(nil,"waypoint_1_1") )
 	creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
@@ -67,7 +74,25 @@ function KodoTagGameMode:InitGameMode()
 	--GameRules:GetGameModeEntity():SetThink("OnMineGold",self,"MineGold")
 end
 
+function KodoTagGameMode:OnEntityKilled(keys)
+	local killedUnit=EntIndexToHScript(keys.entindex_killed)
+	if(killedUnit._castle) then
+		removeFromArray(GameRules.KodoTagGameMode._bases,killedUnit)
+		print("removed base from base-array")
+	end
+	print(in_array(GameRules.KodoTagGameMode._bases,killedUnit))
 
+end
+
+function KodoTagGameMode:OnThink()
+	for _,val in ipairs(GameRules.KodoTagGameMode._zeroGoldArray) do
+		FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,0})
+		print("updated resourcePanel")
+	end
+	print("thinking")
+	return 0.25
+	
+end
 function KodoTagGameMode:findClosestBase(unit)
 	if(#self._bases==0) then return nil end
 	if(#self._bases==1) then return self._bases[1] end
@@ -86,6 +111,11 @@ function KodoTagGameMode:findClosestBase(unit)
 		return nil
 	end
 
+end
+
+function KodoTagGameMode:difficultyVote(_,difficulty)
+	self._voteTable[difficulty]=self._voteTable[difficulty]+1
+	PrintTable(self._voteTable)
 end
 
 function KodoTagGameMode:goldMineAutomation()

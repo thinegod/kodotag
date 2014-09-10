@@ -39,6 +39,7 @@ function upgradeBuilding(keys)
 	local loc = keys.caster:GetAbsOrigin()
 	if pay(owner,keys.Cost) then
 		local oldinvest=keys.caster.investReturn
+		keys.caster._couldAfford=true
 		local oldHullRadius = keys.caster._hullRadius
 		local building = CreateUnitByName(keys.Unit, loc, false, nil, keys.caster:GetOwnerEntity(), owner:GetTeam())
 		if keys.Castle then
@@ -74,7 +75,7 @@ end
 function attemptRepair(keys)
 	local building=keys.target
 	local hp=keys.HealAmount
-	local cost=hp/building:GetMaxHealth()*building.Cost
+	local cost=hp/building:GetMaxHealth()*building.investReturn*2
 	if (building:GetOwnerEntity()==keys.caster or building:GetOwnerEntity()==keys.caster:GetOwner()) and pay(keys.caster,cost) 
 	and building:GetHealth()<building:GetMaxHealth() then
 	--do nothing
