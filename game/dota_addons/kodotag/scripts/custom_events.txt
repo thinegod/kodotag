@@ -1,0 +1,22 @@
+"CustomEvents"
+{
+	
+	"error_msg"
+	{
+		"player_ID"		"short"
+		"_error"		"string"
+	}
+	"start_vote"
+	{
+		"player_ID"		"short"
+	}
+	"updateResourcePanel"
+	{
+		"player_ID"	"short"
+		"wood"		"short"
+		"food"		"short"
+		"foodMax"	"short"
+		"gold"		"short"
+	}
+	
+}
