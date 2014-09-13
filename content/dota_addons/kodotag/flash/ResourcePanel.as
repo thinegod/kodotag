@@ -24,8 +24,9 @@
 			if(this.globals.Players.GetLocalPlayer()==eventData.player_ID)
 			{
 				visible=true;
-				food.text=eventData.food;
+				food.text=eventData.food+"/"+eventData.foodMax;
 				wood.text=eventData.wood;
+				gold.text=eventData.gold;
 				trace("SUCCESS UPDATE FOODWOOD")
 			}
 		}

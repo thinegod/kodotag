@@ -2,6 +2,7 @@
 
 GATHER_THINK_TIME=0.2
 GOLD_MINE_TIME=3
+ON_THINK_TIME=0.5
 if KodoTagGameMode == nil then
 	KodoTagGameMode = class({})
 end
@@ -28,9 +29,11 @@ function Precache( context )
 	PrecacheUnitByNameSync("farm",context)
 	PrecacheUnitByNameSync("castle_1",context)
 	PrecacheUnitByNameSync("castle_2",context)
+	PrecacheUnitByNameSync("npc_dota_hero_invoker",context)
 	PrecacheResource("particle","particles/generic_gameplay/lasthit_coins.vpcf",context)
 	PrecacheResource("particle","particles/items2_fx/hand_of_midas_coin_shape.vpcf",context)
 	PrecacheResource("particle_folder","particles/units/heroes/hero_jakiro",context)
+	
 	
 	--PrecacheModel("npc_dota_creature_gnoll_assassin",context)
 end
@@ -62,10 +65,11 @@ function KodoTagGameMode:InitGameMode()
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetThink("gatherThinker",self,"gatherThinker",GATHER_THINK_TIME)
-	GameRules:GetGameModeEntity():SetThink("OnThink",self,"OnThink",0.25)
+	GameRules:GetGameModeEntity():SetThink("OnThink",self,"OnThink",ON_THINK_TIME)
 	BuildingHelper:BlockGridNavSquares(16384)
-	GameRules:SetTreeRegrowTime(932458)
+	GameRules:SetTreeRegrowTime(65000)
 	ListenToGameEvent("entity_killed",Dynamic_Wrap(KodoTagGameMode,"OnEntityKilled"),self)
+	 ListenToGameEvent('player_connect_full', Dynamic_Wrap(KodoTagGameMode, 'OnPlayerConnectFull'), self)
 	Convars:RegisterCommand("difficultyVote",function(...) return self:difficultyVote(...) end,"difficultyVote",0)
 	--[[local creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
 	creature:SetInitialGoalEntity(  Entities:FindByName(nil,"waypoint_1_1") )
@@ -76,19 +80,25 @@ end
 
 function KodoTagGameMode:OnEntityKilled(keys)
 	local killedUnit=EntIndexToHScript(keys.entindex_killed)
+	local owner=getAbsoluteParent(killedUnit)
 	if(killedUnit._castle) then
 		removeFromArray(GameRules.KodoTagGameMode._bases,killedUnit)
-		print("removed base from base-array")
 	end
-	print(in_array(GameRules.KodoTagGameMode._bases,killedUnit))
+	if(killedUnit.foodCost) then
+		owner.food=owner.food-killedUnit.foodCost
+	end
+	if(killedUnit.farm) then
+		owner.foodMax=owner.foodMax-killedUnit.foodIncrease
+	end
 
 end
 
 function KodoTagGameMode:OnThink()
+	self:checkForReconnects()
 	for _,val in ipairs(GameRules.KodoTagGameMode._zeroGoldArray) do
-		FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,0})
+		FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,food=val.food,foodMax=val.foodMax,gold=val:GetGold()})
 	end
-	return 0.25
+	return ON_THINK_TIME
 	
 end
 function KodoTagGameMode:findClosestBase(unit)
@@ -126,12 +136,12 @@ local base=nil
 				ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_coin_shape.vpcf",PATTACH_ABSORIGIN_FOLLOW,value.goldMiners[1])
 				value.lastPos=value.goldMiners[1]:GetAbsOrigin()
 				value.goldMiners[1]:AddNoDraw()
-				value.goldMiners[1]:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+				unitDisable(value.goldMiners[1])
 				value.count=0
 				value._mining=true
 			elseif(value.count>=2) then
 				value.goldMiners[1]:RemoveNoDraw()
-				value.goldMiners[1]:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+				unitEnable(value.goldMiners[1])
 				value._mining=false
 				table.insert(self.returnStuff,value.goldMiners[1])
 				value.goldMiners[1]._goldReturn=true
@@ -165,12 +175,7 @@ local returnPos=nil
 				if (unit._tree~=nil) then
 					unit:CastAbilityOnTarget(unit._tree,unit:FindAbilityByName("chop_wood"),base:GetOwnerEntity():GetPlayerID())
 				end
-				if(base:GetOwnerEntity().wood==nil) then
-					base:GetOwnerEntity().wood=self.woodGain
-				else
 					base:GetOwnerEntity().wood=base:GetOwnerEntity().wood+self.woodGain
-					
-				end
 			end
 			--EmitSoundOnClient("sounds/bagdrop.vsnd_c", unit:GetOwner()) This needs fixing
 			
@@ -203,7 +208,29 @@ function KodoTagGameMode:DisplayBuildingGrids()
   end
   print( '*********************************************' )
 end
+function KodoTagGameMode:checkForReconnects()
+	if(not self._checkTime)then 
+		self._checkTime=0
+	else
+		self._checkTime=self._checkTime+1
+	end
+	if((self._checkTime%20)==0) then
+		for _,hero in pairs( Entities:FindAllByClassname( "npc_dota_hero_invoker")) do
+			if hero:GetPlayerOwnerID() == -1 then
+				local id = hero:GetPlayerOwner():GetPlayerID()
+				if id ~= -1 then
+					print("Reconnecting hero for player " .. id)
+					hero:SetControllableByPlayer(id, true)
+					hero:SetPlayerID(id)
+				end
+			end
+		end
+	end
+end
 
-
+function KodoTagGameMode:OnPlayerConnectFull(keys)
+	local player = PlayerInstanceFromIndex(keys.index + 1)
+    local hero = CreateHeroForPlayer('npc_dota_hero_invoker', player)
+end
 
 

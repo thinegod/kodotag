@@ -1,25 +1,63 @@
-		"upgrade_castle_1"
+"upgrade_castle_1"
+{
+	"BaseClass"			 			"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityManaCost" 				"0"
+
+	"AbilityTextureName"            "axe_culling_blade"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint" 				"0"
+	"AbilityCastPoint"				"0"
+	"AbilityChannelTime"			"5.0"
+	"AbilityCooldown"				"5.0"
+	
+	"AbilitySpecial"
+    {
+        "01"
         {
-                "BaseClass" "ability_datadriven"
-                "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-                "AbilityManaCost" "0"
- 
-                "AbilityTextureName"            "axe_culling_blade"
-                "AbilityCastRange" "250"
-                "AbilityCastPoint" "0"
- 
-                "OnSpellStart"
-                {
-					"RunScript"
-					{
-						"ScriptFile"		"scripts/vscripts/buildings.lua"
-						"Function"			"upgradeBuilding"
-						"Cost"				"2"
-						"Unit"				"castle_2"
-						"BuildTime"			"5"
-						"HullRadius" 		"4"	
-						"Scale"				".45"
-						"Castle"			"true"
-					}
-                }
-        }
+			"var_type"		"FIELD_INTEGER"
+			"cost"			"500"
+		}
+		"02"
+        {
+			"var_type"		"FIELD_INTEGER"
+			"woodCost"			"50"
+		}
+		
+	}
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/buildings.lua"
+			"Function"			"upgradeBuilding"
+			"Unit"				"castle_2"
+			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"//this needs to be here so we know for how much to sell the building for
+			"HullRadius" 		"4"	
+			"Scale"				".45"
+			"Castle"			"true"
+		}
+	}
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"attemptBuy"
+			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"
+		}
+	}
+	
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"reimburse"
+			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"
+		}
+	}
+}

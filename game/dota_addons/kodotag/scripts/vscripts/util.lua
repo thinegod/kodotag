@@ -1,32 +1,17 @@
 
 
-function pay(unit,cost)
+function pay(unit,cost,woodCost,foodCost)
 	local player
-	if(unit.GetGold==nil) then
-		player=unit:GetOwner()
-	else
-		player=unit
-	end
-	if (player:GetGold()-cost >= 0) then
+	player=getAbsoluteParent(unit)	
+	if (player:GetGold()-cost >= 0 and player.wood-woodCost>=0 and player.food+foodCost<=player.foodMax) then
 		player:SetGold(player:GetGold()-cost,false)
+		player.wood=player.wood-woodCost
+		player.food=player.food+foodCost
 		return true
 	end
 	return false
 end
 
-function payWood(unit,cost)
-	local player
-	if(unit.GetGold==nil) then
-		player=unit:GetOwner()
-	else
-		player=unit
-	end
-	if (player.wood-cost >= 0) then
-		player.wood=player.wood-cost
-		return true
-	end
-	return false
-end
 function addAbility(keys)
 	if(string.find(keys.Ability,",")==nil) then 
 		keys.caster:AddAbility(keys.Ability)
@@ -45,12 +30,19 @@ function upgradeAllAbilities(maybeUnit)
 	else
 		unit = maybeUnit
 	end
-	for i=0,10 do
+	for i=0,unit:GetAbilityCount() do
 		if(unit:GetAbilityByIndex(i)==nil) then break end
 		unit:GetAbilityByIndex(i):UpgradeAbility()
 	end
 end
-
+function unitDisable(unit)
+	unit:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+	setHiddenAllAbilities(unit,true)
+end
+function unitEnable(unit)
+	unit:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+	setHiddenAllAbilities(unit,false)
+end
 function removeAllAbilities(maybeUnit)
 	local unit
 	if (maybeUnit.caster~=nil) then 
@@ -58,11 +50,20 @@ function removeAllAbilities(maybeUnit)
 	else
 		unit = maybeUnit
 	end
-	for i=0,10 do
+	for i=0,unit:GetAbilityCount() do
 		if(unit:GetAbilityByIndex(i)==nil) then break end
 		unit:RemoveAbility(unit:GetAbilityByIndex(i):GetAbilityName())
 	end
 end
+
+function setHiddenAllAbilities(unit,hidden)
+	assert(unit.GetAbilityCount~=nil,"unit passed to hideallabilities is borked")
+	for i=0,unit:GetAbilityCount() do
+		if(unit:GetAbilityByIndex(i)==nil) then break end
+		unit:GetAbilityByIndex(i):SetHidden(hidden)
+	end
+end
+
 
 function distance(eA,eB)
 	assert(eA and eB,"distance recieved nil values")
@@ -149,16 +150,12 @@ function PrintTable(t, indent, done)
 end
 function reimburse(keys)
 	local absParent=getAbsoluteParent(keys.caster)
-	print(absParent)
-	-- PrintTable(absParent)
-	-- print(type(absParent))
-	-- for k, v in ipairs(absParent) do
-		-- print(k)
-		-- print(v)
-	-- end
-	if(keys.caster._couldAfford) then
+	if(keys.ability._couldAfford) then
 		absParent:SetGold(absParent:GetGold()+keys.Cost,false)
-		keys.caster._couldAfford=nil
+		if(keys.WoodCost~=nil)then 
+			absParent.wood=absParent.wood+keys.WoodCost
+		end
+		keys.ability._couldAfford=nil
 	end
 end
 function isAbsoluteParent(child,parent)
@@ -182,4 +179,26 @@ function getAbsoluteParent(unit)
 		-- return unit
 	-- end
 	return getAbsoluteParent(unit:GetOwner() or unit:GetOwnerEntity())
+end
+
+function attemptBuy(keys)
+	if pay(keys.caster:GetOwner(),keys.Cost or 0,keys.WoodCost or 0,keys.FoodCost or 0) then
+		keys.ability._couldAfford=true
+		--do nothing
+	else
+		keys.ability._couldAfford=nil
+		keys.caster:Stop()
+		FireGameEvent("error_msg",{player_ID=keys.caster:GetPlayerOwnerID()
+		,_error="Can't afford "..keys.ability:GetAbilityName()})
+	end
+end
+
+function isMovingTowards(entA,entB)
+	local correctDirection=(entB:GetAbsOrigin()-entA:GetAbsOrigin()):Normalized()
+	if(entA:GetForwardVector()==correctDirection)then
+		
+	end
+	print(makeVectorString(correctDirection).."  blablal  "..makeVectorString(entA:GetForwardVector()))
+	print(entA:GetForwardVector():Length2D())
+	print(correctDirection:Length2D())
 end

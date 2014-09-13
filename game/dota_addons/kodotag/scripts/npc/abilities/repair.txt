@@ -21,15 +21,6 @@
 	"AbilityManaCost"				"0"
 	"AbilityChannelTime"			"0.5"
 	
-	"AbilitySpecial"
-    {
-        "01"
-        {
-			"var_type"		"FIELD_INTEGER"
-			"HealAmount"	"10"
-		}
-		
-	}
 	
 	"OnSpellStart"
 	{
@@ -37,18 +28,11 @@
 		{
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
 			"Function"			"attemptRepair"
-			"HealAmount"		"%HealAmount"
 		}
 
 	}
 	"OnChannelSucceeded"
-	 {
-	 	"Heal"
-		{
-			"HealAmount"	"%HealAmount"
-			"Target"		"TARGET"
-		}
-		
+	 {		
 		"RunScript"
 		{
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
