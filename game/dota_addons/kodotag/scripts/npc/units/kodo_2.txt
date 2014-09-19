@@ -7,7 +7,7 @@
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
 		"IsAncient"					"1"
-		"ModelScale" 					".65"
+		"ModelScale" 					".9"
 		"IsNeutralUnitType"			"1"
 
 		// Abilities
@@ -28,8 +28,8 @@
 		"AttackDamageMax"			"12"		// Damage range max.	
 		"AttackRate"				"1.8"		// Speed of attack.
 		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
-		"AttackRange"				"300"		// Range within a target can be attacked.
+		"AttackAcquisitionRange"	"128"		// Range within a target can be acquired.
+		"AttackRange"				"128"		// Range within a target can be attacked.
 		"ProjectileModel"			"thunderlizard_base_attack"	// Particle system model for projectile.
 		"ProjectileSpeed"			"1500"		// Speed of projectile.		   
 
@@ -37,6 +37,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"70"
 		"HealthBarOffset"			"220"
+		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"
 
 		// Bounty
 		//----------------------------------------------------------------

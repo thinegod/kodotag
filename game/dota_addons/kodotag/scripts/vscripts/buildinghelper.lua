@@ -262,7 +262,7 @@ function BuildingHelper:AddBuildingToGrid(vPoint, nSize, vOwnersHero)
 		topBorderY = centerY+halfSide, 
 		bottomBorderY = centerY-halfSide}
 		
-	if BuildingHelper:IsRectangularAreaBlocked(buildingRect) then
+	if vOwnersHero~=nil and BuildingHelper:IsRectangularAreaBlocked(buildingRect) then
 		print("Building location blocked. Returning -1")
 		-- It'd be wise to fire a game event when this returns -1 and use Actionscript to notify the player that the spot is blocked.
 		return -1
@@ -278,10 +278,12 @@ function BuildingHelper:AddBuildingToGrid(vPoint, nSize, vOwnersHero)
 	
 	-- The spot is not blocked, so add it to the closed squares.
 	local closed = {}
-	if BH_UNITS[vOwnersHero:GetPlayerID()] then
-		vOwnersHero:GeneratePathingMap()
-	else
-		print("You haven't added the owner as a unit. No pathing map will be generated, and the owner may get stuck after building the building.")
+	if(vOwnersHero~=nil)then
+		if BH_UNITS[vOwnersHero:GetPlayerID()] then
+			vOwnersHero:GeneratePathingMap()
+		else
+			print("You haven't added the owner as a unit. No pathing map will be generated, and the owner may get stuck after building the building.")
+		end
 	end
 	
 	for x=buildingRect.leftBorderX+32,buildingRect.rightBorderX-32,64 do

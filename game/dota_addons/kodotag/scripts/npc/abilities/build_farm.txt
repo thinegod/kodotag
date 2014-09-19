@@ -18,7 +18,8 @@
 			"Unit"				"farm"
 			"BuildTime"			"1.0"
 			"HullRadius" 		"2"	
-			"Scale"				"3"
+			"Scale"				"1.5"
+			"FoodIncrease"		"6"
 		}
 	}
 }

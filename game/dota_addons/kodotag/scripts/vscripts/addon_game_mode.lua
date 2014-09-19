@@ -2,7 +2,7 @@
 
 GATHER_THINK_TIME=0.2
 GOLD_MINE_TIME=3
-ON_THINK_TIME=0.5
+ON_THINK_TIME=0.2
 if KodoTagGameMode == nil then
 	KodoTagGameMode = class({})
 end
@@ -11,6 +11,7 @@ require("buildings")
 require("triggers")
 require("units")
 require("util")
+require("spawner")
 
 function Precache( context )
 	--[[
@@ -21,8 +22,9 @@ function Precache( context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
 	PrecacheUnitByNameSync("worker",context)
-	PrecacheUnitByNameSync("barricade_1",context)
-	PrecacheUnitByNameSync("barricade_2",context)
+	for i=1,6 do 
+		PrecacheUnitByNameSync("barricade_"..i,context)
+	end
 	PrecacheResource("ranged_tower_good","particles/folder",context)
 	PrecacheResource("coins.vsnd","sounds/ui",context)
 	PrecacheUnitByNameSync("basic_tower",context)
@@ -33,7 +35,8 @@ function Precache( context )
 	PrecacheResource("particle","particles/generic_gameplay/lasthit_coins.vpcf",context)
 	PrecacheResource("particle","particles/items2_fx/hand_of_midas_coin_shape.vpcf",context)
 	PrecacheResource("particle_folder","particles/units/heroes/hero_jakiro",context)
-	
+	PrecacheUnitByNameSync("kodo_1",context)
+	PrecacheResource("particle","particles/neutral_fx/thunderlizard_base_attack.vpcf",context)
 	
 	--PrecacheModel("npc_dota_creature_gnoll_assassin",context)
 end
@@ -49,7 +52,7 @@ function KodoTagGameMode:InitGameMode()
 	self.goldMines={}
 	self.returnStuff={}
 	self._bases={}
-	self._zeroGoldArray={}
+	self.players={}
 	self._voteTable={Noob=0,Easy=0,Normal=0,Hard=0,Extreme=0}
 	self.goldGain=10
 	self.woodGain=10
@@ -64,13 +67,14 @@ function KodoTagGameMode:InitGameMode()
 	GameRules:SetGoldTickTime( 60.0 )
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetSameHeroSelectionEnabled(true)
-	GameRules:GetGameModeEntity():SetThink("gatherThinker",self,"gatherThinker",GATHER_THINK_TIME)
 	GameRules:GetGameModeEntity():SetThink("OnThink",self,"OnThink",ON_THINK_TIME)
 	BuildingHelper:BlockGridNavSquares(16384)
 	GameRules:SetTreeRegrowTime(65000)
 	ListenToGameEvent("entity_killed",Dynamic_Wrap(KodoTagGameMode,"OnEntityKilled"),self)
 	 ListenToGameEvent('player_connect_full', Dynamic_Wrap(KodoTagGameMode, 'OnPlayerConnectFull'), self)
 	Convars:RegisterCommand("difficultyVote",function(...) return self:difficultyVote(...) end,"difficultyVote",0)
+	self:initGoldMines()
+	Spawner:Init()
 	--[[local creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
 	creature:SetInitialGoalEntity(  Entities:FindByName(nil,"waypoint_1_1") )
 	creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
@@ -95,7 +99,9 @@ end
 
 function KodoTagGameMode:OnThink()
 	self:checkForReconnects()
-	for _,val in ipairs(GameRules.KodoTagGameMode._zeroGoldArray) do
+	Spawner:Think()
+	self:gatherThinker()
+	for _,val in ipairs(GameRules.KodoTagGameMode.players) do
 		FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,food=val.food,foodMax=val.foodMax,gold=val:GetGold()})
 	end
 	return ON_THINK_TIME
@@ -125,7 +131,12 @@ function KodoTagGameMode:difficultyVote(_,difficulty)
 	self._voteTable[difficulty]=self._voteTable[difficulty]+1
 	PrintTable(self._voteTable)
 end
-
+function KodoTagGameMode:initGoldMines()
+	for k,v in ipairs(Entities:FindAllByName("Goldmine*")) do
+		BuildingHelper:AddBuildingToGrid(v:GetAbsOrigin(), 12, nil)
+	end
+	
+end
 function KodoTagGameMode:goldMineAutomation()
 local basePos=nil
 local playerPos=nil
@@ -214,7 +225,7 @@ function KodoTagGameMode:checkForReconnects()
 	else
 		self._checkTime=self._checkTime+1
 	end
-	if((self._checkTime%20)==0) then
+	if((self._checkTime%1)==0) then
 		for _,hero in pairs( Entities:FindAllByClassname( "npc_dota_hero_invoker")) do
 			if hero:GetPlayerOwnerID() == -1 then
 				local id = hero:GetPlayerOwner():GetPlayerID()
@@ -231,6 +242,7 @@ end
 function KodoTagGameMode:OnPlayerConnectFull(keys)
 	local player = PlayerInstanceFromIndex(keys.index + 1)
     local hero = CreateHeroForPlayer('npc_dota_hero_invoker', player)
+	print("created hero for player")
 end
 
 

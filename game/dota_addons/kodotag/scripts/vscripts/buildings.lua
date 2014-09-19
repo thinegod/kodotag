@@ -19,6 +19,8 @@ function createBuilding(keys)
 			if keys.Castle then
 				table.insert(GameRules.KodoTagGameMode._bases,building)
 				building._castle=true
+			elseif keys.FoodIncrease then
+				increaseMaxFood(building,keys.FoodIncrease)
 			end
 		else
 			building:RemoveBuilding(keys.HullRadius,true)
@@ -40,6 +42,8 @@ function destroyBuilding(keys)
 end
 
 function upgradeBuilding(keys)
+	print("fodkgfodsgkh")
+	print(keys.Unit)
 	local owner=keys.caster:GetOwnerEntity()
 	local loc = keys.caster:GetAbsOrigin()
 	local oldGoldInvest=keys.caster.goldInvestReturn
@@ -87,8 +91,9 @@ function attemptRepair(keys)
 	local healAmount=(keys.ability:GetChannelTime()/building.buildTime)*building:GetMaxHealth()
 	local goldCost=round(healAmount/building:GetMaxHealth()*(building.goldInvestReturn*2*0.35))
 	local woodCost=round(healAmount/building:GetMaxHealth()*(building.woodInvestReturn*2*0.35))
-	if building:GetOwnerEntity()==getAbsoluteParent(keys.caster) and pay(keys.caster,goldCost,woodCost,0) 
-	and building:GetHealth()<building:GetMaxHealth() then
+	if building:GetOwnerEntity()==getAbsoluteParent(keys.caster)
+	and building:GetHealth()<building:GetMaxHealth() 
+	and pay(keys.caster,goldCost,woodCost,0)  then
 		building:Heal(healAmount,keys.caster)
 	else
 		keys.caster:Stop()
@@ -99,9 +104,9 @@ function buildingCleanup(keys)
 	keys.caster:RemoveBuilding(keys.caster._hullRadius,true)
 end
 
-function increaseMaxFood(keys)
-	local owner=getAbsoluteOwner(keys.caster)
-	keys.caster.foodIncrease=(keys.caster.foodIncrease or 0)+keys.Amount
-	owner.foodMax=owner.foodMax+keys.Amount
+function increaseMaxFood(building, amount)
+	local owner=getAbsoluteParent(building)
+	building.foodIncrease=(building.foodIncrease or 0)+amount
+	owner.foodMax=owner.foodMax+amount
 end
 

@@ -1,4 +1,4 @@
-"upgrade_barricade_1"
+"upgrade_barricade_3"
 {
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -9,20 +9,20 @@
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"AbilityCastPoint"				"0"
-	"AbilityChannelTime"			"2.0"
-	"AbilityCooldown"				"2.0"
+	"AbilityChannelTime"			"8.0"
+	"AbilityCooldown"				"8.0"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"cost"			"5"
+			"cost"			"50"
 		}
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"woodCost"			"0"
+			"woodCost"			"5"
 		}
 		
 	}
@@ -32,7 +32,7 @@
 		{
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
 			"Function"			"upgradeBuilding"
-			"Unit"				"barricade_2"
+			"Unit"				"barricade_4"
 			"Cost"				"%cost"
 			"WoodCost"			"%woodCost"//this needs to be here so we know for how much to sell the building for
 			"HullRadius" 		"2"	

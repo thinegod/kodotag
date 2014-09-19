@@ -1,7 +1,7 @@
 require("util")
 WOOD_COUNT=20
 function startArea(keys)
-	if(keys.activator:IsHero() and not in_array(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)) then
+	if(keys.activator:IsHero() and not in_array(GameRules.KodoTagGameMode.players,keys.activator)) then
 		keys.activator:SetGold(0,false)
 		keys.activator.wood=0
 		keys.activator.food=1
@@ -22,7 +22,7 @@ function startArea(keys)
 		SendToServerConsole("sv_cheats 0")
 		
 		
-		table.insert(GameRules.KodoTagGameMode._zeroGoldArray,keys.activator)
+		table.insert(GameRules.KodoTagGameMode.players,keys.activator)
 	end
 end
 
