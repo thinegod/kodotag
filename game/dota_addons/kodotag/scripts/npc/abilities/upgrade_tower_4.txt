@@ -1,25 +1,30 @@
-"upgrade_barricade_3"
+"upgrade_tower_4"
 {
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "axe_culling_blade"
+	"AbilityTextureName"            "sandking_burrowstrike"
 	"AbilityCastRange" 				"250"
-	"AbilityCastPoint"				"0"
-	"AbilityChannelTime"			"8.0"
-	"AbilityCooldown"				"8.0"
+	"AbilityCastPoint" 				"0"
+	"AbilityChannelTime"			"20.0"
+	"AbilityCooldown"				"20.0"
 	
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"cost"			"50"
+			"cost"			"1600"
 		}
 		"02"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"woodCost"			"5"
+			"woodCost"			"150"
+		}
+		"03"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"foodCost"			"2"
 		}
 		
 	}
@@ -29,11 +34,12 @@
 		{
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
 			"Function"			"upgradeBuilding"
-			"Unit"				"barricade_4"
+			"Unit"				"tower_5"
 			"Cost"				"%cost"
 			"WoodCost"			"%woodCost"//this needs to be here so we know for how much to sell the building for
+			"FoodCost"			"%foodCost"
 			"HullRadius" 		"2"	
-			"Scale"				".45"
+			"Scale"				".7"
 		}
 	}
 	"OnSpellStart"
@@ -44,6 +50,7 @@
 			"Function"			"attemptBuy"
 			"Cost"				"%cost"
 			"WoodCost"			"%woodCost"
+			"FoodCost"			"%foodCost"
 		}
 	}
 	
@@ -55,6 +62,7 @@
 			"Function"			"reimburse"
 			"Cost"				"%cost"
 			"WoodCost"			"%woodCost"
+			"FoodCost"			"%foodCost"
 		}
 	}
 }

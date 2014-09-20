@@ -1,71 +1,71 @@
-	"kodo_1"
-	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_thunder_lizard/n_creep_thunder_lizard_big.mdl"	// Model.
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_Ranged"
-		"Level"						"6"
-		"IsAncient"					"1"
-		"ModelScale" 				".3"
-		"IsNeutralUnitType"			"1"
+"kodo_1"
+{										
+	// General
+	//----------------------------------------------------------------
+	"Model"						"models/creeps/neutral_creeps/n_creep_thunder_lizard/n_creep_thunder_lizard_big.mdl"	// Model.
+	"BaseClass"					"npc_dota_creep_neutral"
+	"SoundSet"					"n_creep_Ranged"
+	"Level"						"6"
+	"IsAncient"					"1"
+	"ModelScale" 				".3"
+	"IsNeutralUnitType"			"1"
 
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					""			// Ability 1
-		"Ability2"					""			// Ability 2
-		"Ability3"					""			// Ability 3
-		"Ability4"					""			// Ability 4
+	// Abilities
+	//----------------------------------------------------------------
+	"Ability1"					""			// Ability 1
+	"Ability2"					""			// Ability 2
+	"Ability3"					""			// Ability 3
+	"Ability4"					""			// Ability 4
 
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"			// Physical protection.
+	// Armor
+	//----------------------------------------------------------------
+	"ArmorPhysical"				"0"			// Physical protection.
 
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"3"		// Damage range min.
-		"AttackDamageMax"			"5"		// Damage range max.	
-		"AttackRate"				"1.8"		// Speed of attack.
-		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"128"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			"thunderlizard_base_attack"	// Particle system model for projectile.
-		"ProjectileSpeed"			"1500"		// Speed of projectile.		   
+	// Attack
+	//----------------------------------------------------------------
+	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+	"AttackDamageMin"			"3"		// Damage range min.
+	"AttackDamageMax"			"5"		// Damage range max.	
+	"AttackRate"				"1.5"		// Speed of attack.
+	"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
+	"AttackAcquisitionRange"	"128"		// Range within a target can be acquired.
+	"AttackRange"				"128"		// Range within a target can be attacked.
+	"ProjectileModel"			"thunderlizard_base_attack"	// Particle system model for projectile.
+	"ProjectileSpeed"			"1500"		// Speed of projectile.		   
 
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"90"
-		"HealthBarOffset"			"240"
-		"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"
+	// Bounds
+	//----------------------------------------------------------------
+	"RingRadius"				"90"
+	"HealthBarOffset"			"240"
+	"BoundsHullName"			"DOTA_HULL_SIZE_TOWER"
 
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"		// Experience earn.
-		"BountyGoldMin"				"89"		// Gold earned min.
-		"BountyGoldMax"				"97"		// Gold earned max.
+	// Bounty
+	//----------------------------------------------------------------
+	"BountyXP"					"0"		// Experience earn.
+	"BountyGoldMin"				"10"		// Gold earned min.
+	"BountyGoldMax"				"10"		// Gold earned max.
 
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"270"		// Speed.
-		
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"80"		// Base health.
-		"StatusHealthRegen"			"0"		// Health regeneration rate.
-		"StatusMana"				"0"		// Base mana.
-		"StatusManaRegen"			"0"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	// Movement
+	//----------------------------------------------------------------
+	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	"MovementSpeed"				"310"		// Speed.
+	
+	// Status
+	//----------------------------------------------------------------
+	"StatusHealth"				"80"		// Base health.
+	"StatusHealthRegen"			"0"		// Health regeneration rate.
+	"StatusMana"				"0"		// Base mana.
+	"StatusManaRegen"			"0"		// Mana regeneration rate.		 
+	
+	// Vision
+	//----------------------------------------------------------------
+	"VisionDaytimeRange"		"1400"		// Range of vision during day light.
+	"VisionNighttimeRange"		"800"		// Range of vision at night time.
 
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}		
+	// Team
+	//----------------------------------------------------------------
+	"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
+	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+	"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+}		

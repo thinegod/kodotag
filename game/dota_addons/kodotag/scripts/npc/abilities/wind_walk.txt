@@ -1,0 +1,38 @@
+"wind_walk"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"AbilityName"					"wind_walk"
+	"BaseClass"						"clinkz_wind_walk"
+	"MaxLevel"						"1"
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"25.0"
+	"AbilityCastPoint"				"0.0"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"12.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fade_time"					"0.6 0.6 0.6 0.6"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"move_speed_bonus_pct"		"50"
+		}
+	}
+}

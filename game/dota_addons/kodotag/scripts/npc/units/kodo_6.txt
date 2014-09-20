@@ -1,13 +1,13 @@
-"kodo_2"
+"kodo_6"
 {										
 	// General
 	//----------------------------------------------------------------
-	"Model"						"models/creeps/neutral_creeps/n_creep_thunder_lizard/n_creep_thunder_lizard_small.mdl"	// Model.
+	"Model"						"models/creeps/neutral_creeps/n_creep_thunder_lizard/n_creep_thunder_lizard_big.mdl"	// Model.
 	"BaseClass"					"npc_dota_creep_neutral"
 	"SoundSet"					"n_creep_Ranged"
 	"Level"						"5"
 	"IsAncient"					"1"
-	"ModelScale" 					".9"
+	"ModelScale" 					".7"
 	"IsNeutralUnitType"			"1"
 
 	// Abilities
@@ -19,17 +19,17 @@
 
 	// Armor
 	//----------------------------------------------------------------
-	"ArmorPhysical"				"0"			// Physical protection.
+	"ArmorPhysical"				"16"			// Physical protection.
 
 	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-	"AttackDamageMin"			"9"		// Damage range min.
-	"AttackDamageMax"			"12"		// Damage range max.	
-	"AttackRate"				"1.2"		// Speed of attack.
+	"AttackDamageMin"			"230"		// Damage range min.
+	"AttackDamageMax"			"400"		// Damage range max.	
+	"AttackRate"				"0.7"		// Speed of attack.
 	"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
-	"AttackAcquisitionRange"	"128"		// Range within a target can be acquired.
-	"AttackRange"				"128"		// Range within a target can be attacked.
+	"AttackAcquisitionRange"	"200"		// Range within a target can be acquired.
+	"AttackRange"				"200"		// Range within a target can be attacked.
 	"ProjectileModel"			"thunderlizard_base_attack"	// Particle system model for projectile.
 	"ProjectileSpeed"			"1500"		// Speed of projectile.		   
 
@@ -42,25 +42,25 @@
 	// Bounty
 	//----------------------------------------------------------------
 	"BountyXP"					"0"		// Experience earn.
-	"BountyGoldMin"				"40"		// Gold earned min.
-	"BountyGoldMax"				"40"		// Gold earned max.
+	"BountyGoldMin"				"800"		// Gold earned min.
+	"BountyGoldMax"				"800"		// Gold earned max.
 
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-	"MovementSpeed"				"390"		// Speed.
+	"MovementSpeed"				"460"		// Speed.
 
 	// Status
 	//----------------------------------------------------------------
-	"StatusHealth"				"320"		// Base health.
+	"StatusHealth"				"8000"		// Base health.
 	"StatusHealthRegen"			"0"		// Health regeneration rate.
 	"StatusMana"				"0"		// Base mana.
 	"StatusManaRegen"			"0"		// Mana regeneration rate.		 
 	
 	// Vision
 	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-	"VisionNighttimeRange"		"1000"		// Range of vision at night time.
+	"VisionDaytimeRange"		"2000"		// Range of vision during day light.
+	"VisionNighttimeRange"		"2000"		// Range of vision at night time.
 
 	// Team
 	//----------------------------------------------------------------

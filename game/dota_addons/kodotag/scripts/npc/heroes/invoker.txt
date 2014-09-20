@@ -1,41 +1,39 @@
-	"npc_dota_hero_invoker_template"
-	{
-		"override_hero"				"npc_dota_hero_invoker"			// Hero to override
-		"Ability1"					"build"				// Ability 1
-		"Ability2"					"chop_wood"			// Ability 2
-		"Ability3"					"repair"			// Ability 3
-		"Ability4"					"damage"			// Ability 4
-		"Ability5"					""			// Ability 5
-		"Ability6"					""			// Ability 6
-		// "Ability4"					"build_barricade"		// Ability 1
-		// "Ability5"					"build_basic_tower"		// Ability 2
-		// "Ability7"					"build_castle"			// Ability 4
-		// "Ability9"					"build_farm"
-		"VisionNighttimeRange"		"1800"										// Range of vision at night time.
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-		// Attack
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"			// Damage range min.
-		"AttackDamageMax"			"0"			// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"0"			// Speed of attack.
-		"AttackAnimationPoint"		"0"			// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
-		"AttackRange"				"0"			// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.
-		
-		//status
-		"StatusHealth"				"1"		// Base health.
-		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
-		"StatusMana"				"200"			// Base mana.
-		"StatusManaRegen"			"1"			// Mana regeneration rate.
-		
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"										// Base strength
-		"AttributeStrengthGain"		"0"										// Strength bonus per level.
-		"AttributeBaseIntelligence"	"0"										// Base intelligence
-		"AttributeIntelligenceGain"	"0"										// Intelligence bonus per level.
-		"AttributeBaseAgility"		"0"										// Base agility
-		"AttributeAgilityGain"		"0"										// Agility bonus per level.
-	}
+"npc_dota_hero_invoker_template"
+{
+	"override_hero"				"npc_dota_hero_invoker"			// Hero to override
+	
+	//Abilities are given in the triggers.lua file in start function
+	"Ability1"					""				// Ability 1
+	"Ability2"					""			// Ability 2
+	"Ability3"					""			// Ability 3
+	"Ability4"					""			// Ability 4
+	"Ability5"					""			// Ability 5
+	"Ability6"					""			// Ability 6
+	"VisionNighttimeRange"		"1800"										// Range of vision at night time.
+	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	// Attack
+	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	"AttackDamageMin"			"0"			// Damage range min.
+	"AttackDamageMax"			"0"			// Damage range max.
+	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+	"AttackRate"				"0"			// Speed of attack.
+	"AttackAnimationPoint"		"0"			// Normalized time in animation cycle to attack.
+	"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+	"AttackRange"				"0"			// Range within a target can be attacked.
+	"ProjectileModel"			""			// Particle system model for projectile.
+	"ProjectileSpeed"			"0"			// Speed of projectile.
+	
+	//status
+	"StatusHealth"				"1"		// Base health.
+	"StatusHealthRegen"			"0.0"		// Health regeneration rate.
+	"StatusMana"				"200"			// Base mana.
+	"StatusManaRegen"			"1"			// Mana regeneration rate.
+	
+	"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+	"AttributeBaseStrength"		"0"										// Base strength
+	"AttributeStrengthGain"		"0"										// Strength bonus per level.
+	"AttributeBaseIntelligence"	"0"										// Base intelligence
+	"AttributeIntelligenceGain"	"0"										// Intelligence bonus per level.
+	"AttributeBaseAgility"		"0"										// Base agility
+	"AttributeAgilityGain"		"0"										// Agility bonus per level.
+}

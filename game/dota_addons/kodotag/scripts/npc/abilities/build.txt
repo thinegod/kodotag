@@ -14,7 +14,12 @@
 		"RemoveAbility"
 		{
 			"Target"			"CASTER"
-			"AbilityName"		"damage"
+			"AbilityName"		"wind_walk"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"farsight"
 		}
 		"RemoveAbility"
 		{

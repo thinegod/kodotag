@@ -15,8 +15,8 @@
 			"Function"			"createBuilding"
 			"Target"			"POINT"
 			"Cost"				"50"
-			"Unit"				"basic_tower"
-			"BuildTime"			"5"
+			"Unit"				"tower_1"
+			"BuildTime"			"4"
 			"HullRadius" 		"2"	
 			"Scale"				".85"	
 		}

@@ -43,7 +43,7 @@
 		{
 			"ScriptFile"		"scripts/vscripts/util.lua"
 			"Function"			"addAbility"
-			"Ability"			"build,repair,chop_wood,damage"
+			"Ability"			"build,repair,chop_wood,wind_walk,farsight"
 		}
 	}
 }

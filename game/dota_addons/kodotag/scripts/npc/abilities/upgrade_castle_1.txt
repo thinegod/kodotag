@@ -3,11 +3,9 @@
 	"BaseClass"			 			"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	"AbilityManaCost" 				"0"
-
 	"AbilityTextureName"            "axe_culling_blade"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
-	"AbilityCastPoint"				"0"
 	"AbilityChannelTime"			"5.0"
 	"AbilityCooldown"				"5.0"
 	

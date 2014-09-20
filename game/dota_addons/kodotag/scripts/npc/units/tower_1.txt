@@ -1,4 +1,4 @@
-"basic_tower"
+"tower_1"
 {
 	// General
 	//
@@ -12,7 +12,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	
-	"Ability1"					"upgradeTower1"			// Ability 1.
+	"Ability1"					"upgrade_tower_1"			// Ability 1.
 	"Ability2"					""			// Ability 2.
 	"Ability3"					""			// Ability 3.
 	"Ability4"					""			// Ability 4.
@@ -32,8 +32,8 @@
 	"AttackDamageMin"			"10"		// Damage range min.
 	"AttackDamageMax"			"12"		// Damage range max.
 	"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-	"AttackRate"				"1"			// Speed of attack.
-	"AttackAnimationPoint"		"1.5"		// Normalized time in animation cycle to attack.
+	"AttackRate"				"1.5"			// Speed of attack.
+	"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
 	"AttackAcquisitionRange"	"600"		// Range within a target can be acquired.
 	"AttackRange"				"600"		// Range within a target can be attacked.
 	"ProjectileModel"			"ranged_tower_good"		// Particle system model for projectile.

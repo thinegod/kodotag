@@ -7,8 +7,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-	
-		"AbilityCastRange"				"150"
+	"AbilityCastRange"				"150"
 	"AbilityCastPoint"				"0.5"
 	"AbilityCooldown"				"0.5"
 	"AbilityManaCost"				"0"
