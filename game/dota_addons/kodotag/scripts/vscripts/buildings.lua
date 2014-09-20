@@ -3,9 +3,9 @@ function createBuilding(keys)
 	local point = BuildingHelper:AddBuildingToGrid(keys.target_points[1], keys.HullRadius, keys.caster)
 	-- Create model and do general initiation.
 	if point ~= -1 then
-		local building = CreateUnitByName(keys.Unit, point, false,  nil,keys.caster, keys.caster:GetTeam())
-		BuildingHelper:AddBuilding(building)
 		if pay(keys.caster,keys.Cost,(keys.WoodCost or 0),(keys.FoodCost or 0)) then
+			local building = CreateUnitByName(keys.Unit, point, false,  nil,keys.caster, keys.caster:GetTeam())
+			BuildingHelper:AddBuilding(building)
 			building:UpdateHealth(keys.BuildTime,true,keys.Scale)
 			building:SetHullRadius(keys.HullRadius*32)
 			building._hullRadius = keys.HullRadius
@@ -22,8 +22,16 @@ function createBuilding(keys)
 			elseif keys.FoodIncrease then
 				increaseMaxFood(building,keys.FoodIncrease)
 			end
+			unitDisable(keys.caster)
+			keys.caster:AddNoDraw()
+			Timers:CreateTimer(keys.BuildTime,
+			function()
+				unitEnable(keys.caster)
+				keys.caster:RemoveNoDraw()
+			end
+			)
 		else
-			building:RemoveBuilding(keys.HullRadius,true)
+			BuildingHelper:RemoveFromGrid(point,keys.HullRadius)
 			FireGameEvent("error_msg",{player_ID=keys.caster:GetPlayerOwnerID(),_error="Can't afford building"})
 		end
 	else
@@ -89,8 +97,16 @@ end
 function attemptRepair(keys)
 	local building=keys.target
 	local healAmount=(keys.ability:GetChannelTime()/building.buildTime)*building:GetMaxHealth()
-	local goldCost=round(healAmount/building:GetMaxHealth()*(building.goldInvestReturn*2*0.35))
-	local woodCost=round(healAmount/building:GetMaxHealth()*(building.woodInvestReturn*2*0.35))
+	local fGoldCost=healAmount/building:GetMaxHealth()*(building.goldInvestReturn*2*0.35)
+	local fWoodCost=healAmount/building:GetMaxHealth()*(building.woodInvestReturn*2*0.35)
+	building._cumulativeRepairGoldCost=(building._cumulativeRepairGoldCost or 0)+fGoldCost
+	building._cumulativeRepairWoodCost=(building._cumulativeRepairWoodCost or 0)+fWoodCost
+	local goldCost=math.floor(building._cumulativeRepairGoldCost)
+	local woodCost=math.floor(building._cumulativeRepairWoodCost)
+	print(goldCost)
+	print(woodCost)
+	print(building._cumulativeRepairWoodCost)
+	print(math.floor(0))
 	if building:GetOwnerEntity()==getAbsoluteParent(keys.caster)
 	and building:GetHealth()<building:GetMaxHealth() 
 	and pay(keys.caster,goldCost,woodCost,0)  then
@@ -98,6 +114,8 @@ function attemptRepair(keys)
 	else
 		keys.caster:Stop()
 	end	
+	building._cumulativeRepairGoldCost=building._cumulativeRepairGoldCost-goldCost
+	building._cumulativeRepairWoodCost=building._cumulativeRepairWoodCost-woodCost
 end
 
 function buildingCleanup(keys)

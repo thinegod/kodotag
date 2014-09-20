@@ -1,5 +1,4 @@
 
-
 function pay(unit,cost,woodCost,foodCost)
 	local player
 	player=getAbsoluteParent(unit)	
@@ -37,10 +36,12 @@ function upgradeAllAbilities(maybeUnit)
 end
 function unitDisable(unit)
 	unit:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
+	unit:AddNewModifier(unit,nil,"modifier_disabled_invulnerable",nil)
 	setHiddenAllAbilities(unit,true)
 end
 function unitEnable(unit)
 	unit:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+	unit:RemoveModifierByName("modifier_disabled_invulnerable")
 	setHiddenAllAbilities(unit,false)
 end
 function removeAllAbilities(maybeUnit)
@@ -191,14 +192,4 @@ function attemptBuy(keys)
 		FireGameEvent("error_msg",{player_ID=keys.caster:GetPlayerOwnerID()
 		,_error="Can't afford "..keys.ability:GetAbilityName()})
 	end
-end
-
-function isMovingTowards(entA,entB)
-	local correctDirection=(entB:GetAbsOrigin()-entA:GetAbsOrigin()):Normalized()
-	if(entA:GetForwardVector()==correctDirection)then
-		
-	end
-	print(makeVectorString(correctDirection).."  blablal  "..makeVectorString(entA:GetForwardVector()))
-	print(entA:GetForwardVector():Length2D())
-	print(correctDirection:Length2D())
 end

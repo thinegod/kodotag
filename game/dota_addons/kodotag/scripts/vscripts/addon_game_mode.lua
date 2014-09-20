@@ -12,6 +12,7 @@ require("triggers")
 require("units")
 require("util")
 require("spawner")
+require("timers")
 
 function Precache( context )
 	--[[
@@ -25,8 +26,8 @@ function Precache( context )
 	for i=1,6 do 
 		PrecacheUnitByNameSync("barricade_"..i,context)
 	end
-	PrecacheResource("ranged_tower_good","particles/folder",context)
-	PrecacheResource("coins.vsnd","sounds/ui",context)
+	PrecacheResource("particles_folder","ranged_tower_good",context)
+	--PrecacheResource("soundfile","coins.vsnd",context)
 	PrecacheUnitByNameSync("basic_tower",context)
 	PrecacheUnitByNameSync("farm",context)
 	PrecacheUnitByNameSync("castle_1",context)

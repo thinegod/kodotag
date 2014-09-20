@@ -433,7 +433,9 @@ function BuildingHelper:AddBuilding(building)
 		if IsValidEntity(building) then
 			if building.bUpdatingHealth then
 				if building:GetHealth() < building.nMaxHealth and GameRules:GetGameTime() <= building.fTimeBuildingCompleted then
-					building:SetHealth(building:GetHealth()+building.nHealthInterval)
+					building._cumulativeHealth=(building._cumulativeHealth or 0)+building.nHealthInterval
+					building:SetHealth(building:GetHealth()+building._cumulativeHealth)
+					building._cumulativeHealth=building._cumulativeHealth-math.floor(building._cumulativeHealth)
 				else
 					building:SetHealth(building.nMaxHealth)
 					building:SetControllableByPlayer(building.nControllingPlayer,true)
@@ -520,6 +522,29 @@ function BuildingHelper:PrintSquareFromCenterPointShort(v)
 			DebugDrawLine(Vector(v.x+32,v.y-32,BH_Z), Vector(v.x+32,v.y+32,BH_Z), 255, 0, 0, false, .1)
 end
 
+function BuildingHelper:RemoveFromGrid(point,nSize)
+	local center = point
+	local halfSide = (nSize/2.0)*64
+	local buildingRect = {leftBorderX = center.x-halfSide, 
+		rightBorderX = center.x+halfSide, 
+		topBorderY = center.y+halfSide, 
+		bottomBorderY = center.y-halfSide}
+	local removeCount=0
+	for x=buildingRect.leftBorderX+32,buildingRect.rightBorderX-32,64 do
+		for y=buildingRect.topBorderY-32,buildingRect.bottomBorderY+32,-64 do
+			for v,b in pairs(BUILDING_SQUARES) do
+				--if tableContains(v, Vector(x,y,BH_Z)) then
+				if v == makeVectorString(Vector(x,y,BH_Z)) then
+					--print("Removing " .. #v .. " squares.")
+					--table.remove(BUILDING_SQUARES, i)
+					BUILDING_SQUARES[v]=nil
+					removeCount=removeCount+1
+				end
+			end
+		end
+	end
+	print("Removing " .. removeCount .. " squares. From grid")
+end
 --Put this line in InitGameMode to use this function: Convars:RegisterCommand( "buildings", Dynamic_Wrap(YourGameMode, 'DisplayBuildingGrids'), "blah", 0 )
 
 --[[function YourGameMode:DisplayBuildingGrids()
