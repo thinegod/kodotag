@@ -1,0 +1,60 @@
+"upgrade_tower_2_2"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityManaCost" 				"0"
+	"AbilityTextureName"            "sandking_burrowstrike"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint" 				"0"
+	"AbilityChannelTime"			"12.0"
+	"AbilityCooldown"				"12.0"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"cost"			"200"
+		}
+		"02"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"woodCost"			"10"
+		}
+		
+	}
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/buildings.lua"
+			"Function"			"upgradeBuilding"
+			"Unit"				"tower_3"
+			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"//this needs to be here so we know for how much to sell the building for
+			"HullRadius" 		"2"	
+			"Scale"				".45"
+		}
+	}
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"attemptBuy"
+			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"
+		}
+	}
+	
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"reimburse"
+			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"
+		}
+	}
+}

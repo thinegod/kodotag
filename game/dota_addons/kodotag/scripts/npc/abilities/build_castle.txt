@@ -15,12 +15,20 @@
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
 			"Function"			"createBuilding"
 			"Target"			"POINT"
-			"Cost"				"0"
+			"Cost"				"%cost"
 			"Unit"				"castle_1"
 			"BuildTime"			"1.0"
 			"HullRadius" 		"4"	
 			"Scale"				"1"
 			"Castle"			"true"
+		}
+	}
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"		"FIELD_INTEGER"
+			"cost"			"0"
 		}
 	}
 }

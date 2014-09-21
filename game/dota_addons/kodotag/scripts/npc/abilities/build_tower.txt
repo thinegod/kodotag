@@ -1,9 +1,9 @@
-"build_barricade"
+"build_basic_tower"
 {
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "axe_battle_hunger"
+	"AbilityTextureName"            "rubick_telekinesis"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"MaxLevel"						"1"
@@ -14,19 +14,11 @@
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
 			"Function"			"createBuilding"
 			"Target"			"POINT"
-			"Cost"				"%cost"
-			"Unit"				"barricade_1"
-			"BuildTime"			"1.0"
+			"Cost"				"50"
+			"Unit"				"tower_1"
+			"BuildTime"			"4"
 			"HullRadius" 		"2"	
 			"Scale"				".85"	
-		}
-	}
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"cost"				"0"
 		}
 	}
 }
