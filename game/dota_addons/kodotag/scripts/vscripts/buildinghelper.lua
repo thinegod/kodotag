@@ -437,7 +437,7 @@ function BuildingHelper:AddBuilding(building)
 					building:SetHealth(building:GetHealth()+building._cumulativeHealth)
 					building._cumulativeHealth=building._cumulativeHealth-math.floor(building._cumulativeHealth)
 				else
-					building:SetHealth(building.nMaxHealth)
+					--building:SetHealth(building.nMaxHealth)
 					building:SetControllableByPlayer(building.nControllingPlayer,true)
 					building.bUpdatingHealth=false
 				end

@@ -1,33 +1,11 @@
 require("util")
 WOOD_COUNT=20
 function startArea(keys)
-	if(keys.activator:IsHero() and not in_array(GameRules.KodoTagGameMode.players,keys.activator)) then
-		keys.activator:SetGold(0,false)
-		keys.activator.wood=0
-		keys.activator.food=1
-		keys.activator.foodMax=4
-		keys.activator.foodCost=1
-		FireGameEvent("start_vote",{player_ID=keys.activator:GetPlayerID()})
-		removeAllAbilities(keys.activator)
-		keys.activator:AddAbility("build")
-		keys.activator:AddAbility("chop_wood")
-		keys.activator:AddAbility("repair")
-		keys.activator:AddAbility("wind_walk")
-		keys.activator:AddAbility("farsight")
-		upgradeAllAbilities(keys.activator)
-		SendToServerConsole("sv_cheats 1")
-		SendToConsole('dota_sf_hud_inventory 0')
-		SendToConsole('dota_sf_hud_top 0')
-		SendToConsole('dota_render_crop_height 0')
-		SendToConsole('dota_render_y_inset 0')
-		SendToServerConsole("sv_cheats 0")
-		
-		
-		table.insert(GameRules.KodoTagGameMode.players,keys.activator)
-	end
+	--not currently used mimi
 end
 
-function miningGold(keys)	
+function miningGold(keys)
+	if(keys.activator._woodReturn)then return end
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
 	keys.activator:Stop()
 	if(base==nil) then
@@ -112,11 +90,9 @@ function chopWood(keys)
 	
 end
 function testTest(keys)
-	print("fdgsdfgsfgdhfgd")
-	--PrintCircle(keys.target_points[1],keys.Radius)
+	print("testetsset")
 	PrintTable(keys)
-	print(keys.target:GetHealth())
-	--PrintSquare(keys.target_points[1],keys.Size)
+
 
 end
 

@@ -193,3 +193,13 @@ function attemptBuy(keys)
 		,_error="Can't afford "..keys.ability:GetAbilityName()})
 	end
 end
+
+function isFacing(entA,entB)
+	local correctDirection=(entB:GetAbsOrigin()-entA:GetAbsOrigin()):Normalized()
+	if(entA:GetForwardVector()==correctDirection)then
+		
+	end
+	print(makeVectorString(correctDirection).."  blablal  "..makeVectorString(entA:GetForwardVector()))
+	print(entA:GetForwardVector():Length2D())
+	print(correctDirection:Length2D())
+ end

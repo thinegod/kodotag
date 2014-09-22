@@ -58,7 +58,7 @@ function KodoTagGameMode:InitGameMode()
 	self.goldGain=10
 	self.woodGain=10
 	GameRules:SetTimeOfDay( 0.75 )
-	GameRules:SetHeroSelectionTime( 5.0 )
+	GameRules:SetHeroSelectionTime( 0.0 )
 	GameRules:SetPreGameTime( 5.0 )
 	GameRules:SetPostGameTime( 60.0 )
 	GameRules:SetTreeRegrowTime( 60.0 )
@@ -156,6 +156,7 @@ local base=nil
 				unitEnable(value.goldMiners[1])
 				value._mining=false
 				table.insert(self.returnStuff,value.goldMiners[1])
+				value.goldMiners[1]:AddNewModifier(value.goldMiners[1],nil,"modifier_phased",{duration=5})
 				value.goldMiners[1]._goldReturn=true
 				value.goldMiners[1]:MoveToPosition(value.goldMiners[1]._closestBase:GetAbsOrigin())
 				table.remove(value.goldMiners,1)
@@ -221,12 +222,12 @@ function KodoTagGameMode:DisplayBuildingGrids()
   print( '*********************************************' )
 end
 function KodoTagGameMode:checkForReconnects()
-	if(not self._checkTime)then 
+	--[[if(not self._checkTime)then 
 		self._checkTime=0
 	else
 		self._checkTime=self._checkTime+1
 	end
-	if((self._checkTime%1)==0) then
+	if((self._checkTime%1)==0) then]]
 		for _,hero in pairs( Entities:FindAllByClassname( "npc_dota_hero_invoker")) do
 			if hero:GetPlayerOwnerID() == -1 then
 				local id = hero:GetPlayerOwner():GetPlayerID()
@@ -234,12 +235,36 @@ function KodoTagGameMode:checkForReconnects()
 					print("Reconnecting hero for player " .. id)
 					hero:SetControllableByPlayer(id, true)
 					hero:SetPlayerID(id)
+					self:playerInit(hero)
 				end
 			end
 		end
+	--end
+end
+function KodoTagGameMode:playerInit(hero)
+	if(hero:IsHero() and not in_array(GameRules.KodoTagGameMode.players,hero)) then
+		hero:SetGold(0,false)
+		hero.wood=0
+		hero.food=1
+		hero.foodMax=4
+		hero.foodCost=1
+		removeAllAbilities(hero)
+		hero:AddAbility("build")
+		hero:AddAbility("chop_wood")
+		hero:AddAbility("repair")
+		hero:AddAbility("wind_walk")
+		hero:AddAbility("farsight")
+		upgradeAllAbilities(hero)
+		SendToServerConsole("sv_cheats 1")
+		SendToConsole('dota_sf_hud_inventory 0')
+		SendToConsole('dota_sf_hud_top 0')
+		SendToConsole('dota_render_crop_height 0')
+		SendToConsole('dota_render_y_inset 0')
+		--SendToServerConsole("sv_cheats 0")--
+		table.insert(GameRules.KodoTagGameMode.players,hero)
+		FireGameEvent("start_vote",{player_ID=hero:GetPlayerID()})
 	end
 end
-
 function KodoTagGameMode:OnPlayerConnectFull(keys)
 	local player = PlayerInstanceFromIndex(keys.index + 1)
     local hero = CreateHeroForPlayer('npc_dota_hero_invoker', player)

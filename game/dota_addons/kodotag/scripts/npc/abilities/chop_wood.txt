@@ -19,6 +19,19 @@
 				"ScriptFile"		"scripts/vscripts/triggers.lua"
 				"Function"			"chopWood"
 			}
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/triggers.lua"
+			"Function"			"testTest"
+		}
+	}
+	"OnOrder"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/triggers.lua"
+			"Function"			"testTest"
+		}
 	}
 
 

@@ -103,10 +103,6 @@ function attemptRepair(keys)
 	building._cumulativeRepairWoodCost=(building._cumulativeRepairWoodCost or 0)+fWoodCost
 	local goldCost=math.floor(building._cumulativeRepairGoldCost)
 	local woodCost=math.floor(building._cumulativeRepairWoodCost)
-	print(goldCost)
-	print(woodCost)
-	print(building._cumulativeRepairWoodCost)
-	print(math.floor(0))
 	if building:GetOwnerEntity()==getAbsoluteParent(keys.caster)
 	and building:GetHealth()<building:GetMaxHealth() 
 	and pay(keys.caster,goldCost,woodCost,0)  then
