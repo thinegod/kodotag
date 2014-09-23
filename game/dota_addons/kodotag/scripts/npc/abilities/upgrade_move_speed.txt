@@ -1,0 +1,33 @@
+"upgrade_move_speed"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"					"danage"
+	"AbilityTextureName"			"tinker_laser"												
+	"MaxLevel"						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+
+	// Unit Targeting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"200"
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
+
+	"OnSpellStart"
+	{
+		"Damage"
+		{
+			"Type"   "DAMAGE_TYPE_COMPOSITE"
+			"Damage" "10"
+			"Target" "TARGET"
+		}
+	}
+	
+}

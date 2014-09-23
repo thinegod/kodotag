@@ -3,7 +3,7 @@
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "axe_culling_blade"
+	"AbilityTextureName"            "kodotag_upgrade_barricade"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint"				"0"
 	"AbilityChannelTime"			"2.0"

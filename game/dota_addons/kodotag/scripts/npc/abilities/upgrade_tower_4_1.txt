@@ -34,7 +34,7 @@
 		{
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
 			"Function"			"upgradeBuilding"
-			"Unit"				"tower_5"
+			"Unit"				"tower_5_1"
 			"Cost"				"%cost"
 			"WoodCost"			"%woodCost"//this needs to be here so we know for how much to sell the building for
 			"FoodCost"			"%foodCost"

@@ -28,7 +28,7 @@ function Precache( context )
 	end
 	PrecacheResource("particles_folder","ranged_tower_good",context)
 	--PrecacheResource("soundfile","coins.vsnd",context)
-	PrecacheUnitByNameSync("basic_tower",context)
+	PrecacheUnitByNameSync("tower_1",context)
 	PrecacheUnitByNameSync("farm",context)
 	PrecacheUnitByNameSync("castle_1",context)
 	PrecacheUnitByNameSync("castle_2",context)

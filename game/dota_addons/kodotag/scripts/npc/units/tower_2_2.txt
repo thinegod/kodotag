@@ -1,4 +1,4 @@
-"tower_2"
+"tower_2_2"
 {
 	// General
 	//
@@ -11,8 +11,8 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	
-	"Ability1"					"upgrade_tower_2"			// Ability 1.
+	"AbilityLayout"				"2"
+	"Ability1"					"upgrade_tower_2_2"			// Ability 1.
 	"Ability2"					""			// Ability 2.
 	"Ability3"					""			// Ability 3.
 	"Ability4"					""			// Ability 4.
@@ -24,7 +24,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"4"		// Physical protection.
-	"MagicalResistance"				"0"			// Magical protection.
+	"MagicalResistance"			"0"			// Magical protection.
 
 	// Attack
 	//----------------------------------------------------------------

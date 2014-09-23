@@ -29,7 +29,7 @@
 		{
 			"ScriptFile"		"scripts/vscripts/buildings.lua"
 			"Function"			"upgradeBuilding"
-			"Unit"				"tower_4"
+			"Unit"				"tower_4_1"
 			"Cost"				"%cost"
 			"WoodCost"			"%woodCost"//this needs to be here so we know for how much to sell the building for
 			"HullRadius" 		"2"	

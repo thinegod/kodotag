@@ -11,9 +11,9 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	
-	"Ability1"					"upgrade_tower_1"			// Ability 1.
-	"Ability2"					""			// Ability 2.
+	"AbilityLayout"				"3"
+	"Ability1"					"upgrade_tower_1_1"			// Ability 1.
+	"Ability2"					"upgrade_tower_1_2"			// Ability 2.
 	"Ability3"					""			// Ability 3.
 	"Ability4"					""			// Ability 4.
 	"Ability5"					"destroy_building"			// Ability 5.
@@ -24,7 +24,7 @@
 	// Armor
 	//----------------------------------------------------------------
 	"ArmorPhysical"				"3"		// Physical protection.
-	"MagicalResistance"				"0"			// Magical protection.
+	"MagicalResistance"			"0"			// Magical protection.
 
 	// Attack
 	//----------------------------------------------------------------

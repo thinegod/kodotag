@@ -1,9 +1,9 @@
-"create_worker"
+"create_architect"
 {
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET|DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "kodotag_create_worker"
+	"AbilityTextureName"            "kodotag_create_architect"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint"				"0"
 	"AbilityChannelTime"			"5.0"
@@ -14,12 +14,17 @@
         "01"
         {
 			"var_type"		"FIELD_INTEGER"
-			"cost"			"150"
+			"cost"			"550"
+		}
+		"03"
+        {
+			"var_type"		"FIELD_INTEGER"
+			"woodCost"		"150"
 		}
 		"02"
         {
 			"var_type"		"FIELD_INTEGER"
-			"foodCost"			"2"
+			"foodCost"		"4"
 		}
 		
 	}
@@ -30,6 +35,7 @@
 			"ScriptFile"		"scripts/vscripts/util.lua"
 			"Function"			"attemptBuy"
 			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"
 			"FoodCost"			"%foodCost"
 		}
 	}
@@ -39,7 +45,7 @@
 		{
 			"ScriptFile"		"scripts/vscripts/units.lua"
 			"Function"			"createUnit"
-			"Unit"				"worker"
+			"Unit"				"architect"
 		}
 	}
 	"OnChannelInterrupted"
@@ -49,6 +55,7 @@
 			"ScriptFile"		"scripts/vscripts/util.lua"
 			"Function"			"reimburse"
 			"Cost"				"%cost"
+			"WoodCost"			"%woodCost"
 			"FoodCost"			"%foodCost"
 		}
 	}

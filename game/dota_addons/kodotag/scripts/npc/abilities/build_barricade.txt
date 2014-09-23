@@ -3,7 +3,7 @@
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "axe_battle_hunger"
+	"AbilityTextureName"            "kodotag_barricade_1"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"MaxLevel"						"1"
