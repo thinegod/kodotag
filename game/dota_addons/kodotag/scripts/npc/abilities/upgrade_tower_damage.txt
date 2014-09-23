@@ -4,7 +4,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"ability_datadriven"
 	"AbilityName"					"danage"
-	"AbilityTextureName"			"tinker_laser"												
+	"AbilityTextureName"			"kodotag_upgrade_damage"												
 	"MaxLevel"						"1"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 
