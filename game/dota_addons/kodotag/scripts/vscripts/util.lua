@@ -36,12 +36,12 @@ function upgradeAllAbilities(maybeUnit)
 end
 function unitDisable(unit)
 	unit:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
-	unit:AddNewModifier(unit,nil,"modifier_disabled_invulnerable",nil)
+	unit:AddNewModifier(unit,nil,"modifier_invulnerable",nil)
 	setHiddenAllAbilities(unit,true)
 end
 function unitEnable(unit)
 	unit:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
-	unit:RemoveModifierByName("modifier_disabled_invulnerable")
+	unit:RemoveModifierByName("modifier_invulnerable")
 	setHiddenAllAbilities(unit,false)
 end
 function removeAllAbilities(maybeUnit)
