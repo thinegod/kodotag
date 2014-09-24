@@ -295,7 +295,12 @@ function BuildingHelper:AddBuildingToGrid(vPoint, nSize, vOwnersHero)
 					vOwnersHero.bNeedsToJump=true
 				end
 				for id,b in pairs(BH_UNITS) do
-					local unit = PlayerResource:GetPlayer(id):GetAssignedHero()
+					local unit
+					if (PlayerResource:GetPlayer(id) == nil) then
+						unit = EntIndexToHScript(id)
+					else
+						unit = PlayerResource:GetPlayer(id):GetAssignedHero()
+					end
 					if unit ~= vOwnersHero then
 						unit:GeneratePathingMap()
 						if unit.vPathingMap[makeVectorString(Vector(x,y,BH_Z))] then
@@ -337,7 +342,12 @@ function BuildingHelper:AddBuilding(building)
 	building.bScale=false
 	
 	for id,b in pairs(BH_UNITS) do
-		local unit = PlayerResource:GetPlayer(id):GetAssignedHero()
+		local unit
+		if (PlayerResource:GetPlayer(id) == nil) then
+			unit = EntIndexToHScript(id)
+		else
+			unit = PlayerResource:GetPlayer(id):GetAssignedHero()
+		end
 		if unit.bNeedsToJump then
 			--print("jumping")
 			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
@@ -363,11 +373,19 @@ function BuildingHelper:AddBuilding(building)
 	function building:UpdateHealth(fBuildTime, bScale, fMaxScale)
 		building:SetHealth(1)
 		building.nfBuildTime=fBuildTime
-		building.nControllingPlayer=building:GetOwnerEntity():GetPlayerID()
+		building.nControllingPlayer=getAbsoluteParent(building:GetOwnerEntity()):GetPlayerID()
+		
 		--building:SetControllableByPlayer(building.nControllingPlayer,false)
 		building.fTimeBuildingCompleted=GameRules:GetGameTime()+fBuildTime
 		building.nMaxHealth = building:GetMaxHealth()
-		building.nHealthInterval = building.nMaxHealth*1/(fBuildTime/BUILDINGHELPER_THINK)
+		building.nHealthInterval = building.nMaxHealth/(fBuildTime)
+		building:SetBaseHealthRegen(building.nHealthInterval)
+		Timers:CreateTimer(fBuildTime,
+		function()
+			building:SetControllableByPlayer(building.nControllingPlayer,true)
+			building:SetBaseHealthRegen(0)
+		end)
+		
 		building.bUpdatingHealth = true
 		if bScale then
 			building.fMaxScale=fMaxScale
@@ -431,18 +449,6 @@ function BuildingHelper:AddBuilding(building)
 		local curTime = GameRules:GetGameTime()
 		
 		if IsValidEntity(building) then
-			if building.bUpdatingHealth then
-				if building:GetHealth() < building.nMaxHealth and GameRules:GetGameTime() <= building.fTimeBuildingCompleted then
-					building._cumulativeHealth=(building._cumulativeHealth or 0)+building.nHealthInterval
-					building:SetHealth(building:GetHealth()+building._cumulativeHealth)
-					building._cumulativeHealth=building._cumulativeHealth-math.floor(building._cumulativeHealth)
-				else
-					--building:SetHealth(building.nMaxHealth)
-					building:SetControllableByPlayer(building.nControllingPlayer,true)
-					building.bUpdatingHealth=false
-				end
-			end
-			
 			if building.bScale then
 				if building.fCurrentScale < building.fMaxScale then
 					building.fCurrentScale = building.fCurrentScale+building.fScaleInterval

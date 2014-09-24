@@ -1,5 +1,9 @@
 
 function createBuilding(keys)
+	if (not keys.caster:IsHero()) then
+		keys.caster.GetPlayerID=function() return keys.caster:entindex() end
+		BuildingHelper:AddUnit(keys.caster)
+	end
 	local point = BuildingHelper:AddBuildingToGrid(keys.target_points[1], keys.HullRadius, keys.caster)
 	-- Create model and do general initiation.
 	if point ~= -1 then
@@ -40,7 +44,7 @@ function createBuilding(keys)
 	end
 end
 function destroyBuilding(keys)
-	local owner=keys.caster:GetOwnerEntity()
+	local owner=getAbsoluteParent(keys.caster:GetOwnerEntity())
 	if(keys.caster._castle) then 
 		removeFromArray(GameRules.KodoTagGameMode._bases,keys.caster)
 	end

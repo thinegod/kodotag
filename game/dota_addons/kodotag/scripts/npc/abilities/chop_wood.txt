@@ -14,11 +14,11 @@
 	"AbilityChannelTime"			"3"
 	"OnChannelSucceeded"
 	{
-			"RunScript"
-			{
+		"RunScript"
+		{
 				"ScriptFile"		"scripts/vscripts/triggers.lua"
 				"Function"			"chopWood"
-			}
+		}
 		"RunScript"
 		{
 			"ScriptFile"		"scripts/vscripts/triggers.lua"

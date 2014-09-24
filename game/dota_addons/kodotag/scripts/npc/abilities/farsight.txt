@@ -2,7 +2,7 @@
 {
 	"BaseClass"						"ability_datadriven"
 	"AbilityName"					"farsight"
-	"AbilityTextureName"			"enigma_black_hole"												
+	"AbilityTextureName"			"kodotag_farsight"//"enigma_black_hole"												
 	"MaxLevel"						"1"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityCastRange"				"9000"

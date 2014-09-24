@@ -3,7 +3,7 @@
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "ogre_magi_fireblast"
+	"AbilityTextureName"            "kodotag_build"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"AbilityCooldown"				"0"

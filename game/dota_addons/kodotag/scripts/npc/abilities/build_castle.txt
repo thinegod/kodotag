@@ -23,12 +23,4 @@
 			"Castle"			"true"
 		}
 	}
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"		"FIELD_INTEGER"
-			"cost"			"0"
-		}
-	}
 }

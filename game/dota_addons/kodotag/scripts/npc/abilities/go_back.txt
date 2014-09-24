@@ -3,7 +3,7 @@
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "ember_spirit_activate_fire_remnant"
+	"AbilityTextureName"            "kodotag_return"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"AbilityCooldown"				"0"
