@@ -27,7 +27,7 @@ function Spawner:Think()
 	local done=false
 	AI:Think()
 	if(self.lastSpawnTime+self.spawnInterval < currTime)then
-		done=self["phase"..self.currentPhase](self)
+		--done=self["phase"..self.currentPhase](self)
 		if(done)then--this should not trigger like this, instead we should
 --		move to a new phase after some time has passed..this is for testing purposes
 			self.currentPhase=self.currentPhase+1

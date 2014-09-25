@@ -84,8 +84,14 @@ function PrintCircle(v,radius)
 end
 
 function removeFromArray(array,element)
+	print("remove from array")
+	print(element)
 	for i=1,#array do
 		if(element==array[i]) then
+			print(i)
+			print(element)
+			print(array[i])
+			print(#array)
 			table.remove(array,i)
 		end
 	end

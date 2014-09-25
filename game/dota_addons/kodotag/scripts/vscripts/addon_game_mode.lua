@@ -146,20 +146,20 @@ local base=nil
 		if(#value.goldMiners>0) then
 			if(not value._mining) then
 				ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_coin_shape.vpcf",PATTACH_ABSORIGIN_FOLLOW,value.goldMiners[1])
-				value.lastPos=value.goldMiners[1]:GetAbsOrigin()
 				value.goldMiners[1]:AddNoDraw()
 				unitDisable(value.goldMiners[1])
 				value.count=0
-				value._mining=true
+				value._mining=value.goldMiners[1]
 			elseif(value.count>=2) then
-				value.goldMiners[1]:RemoveNoDraw()
-				unitEnable(value.goldMiners[1])
+				local miner=value._mining
+				miner:RemoveNoDraw()
+				unitEnable(miner)
+				table.insert(self.returnStuff,miner)
+				miner:AddNewModifier(value.goldMiners[1],nil,"modifier_phased",{duration=5})
+				miner._goldReturn=true
+				miner:MoveToPosition(value.goldMiners[1]._closestBase:GetAbsOrigin())
+				removeFromArray(value.goldMiners,miner)
 				value._mining=false
-				table.insert(self.returnStuff,value.goldMiners[1])
-				value.goldMiners[1]:AddNewModifier(value.goldMiners[1],nil,"modifier_phased",{duration=5})
-				value.goldMiners[1]._goldReturn=true
-				value.goldMiners[1]:MoveToPosition(value.goldMiners[1]._closestBase:GetAbsOrigin())
-				table.remove(value.goldMiners,1)
 			else
 				value.count=value.count+GATHER_THINK_TIME
 			end
@@ -187,6 +187,12 @@ local returnPos=nil
 				unit._woodReturn=false
 				if (unit._tree~=nil) then
 					unit:CastAbilityOnTarget(unit._tree,unit:FindAbilityByName("chop_wood"),base:GetOwnerEntity():GetPlayerID())
+					unit._chopping=true
+					Timers:CreateTimer(distance(unit,unit._tree)/unit:GetBaseMoveSpeed(),
+					function()
+						unit._chopping=false
+					end
+					)
 				end
 					base:GetOwnerEntity().wood=base:GetOwnerEntity().wood+self.woodGain
 			end

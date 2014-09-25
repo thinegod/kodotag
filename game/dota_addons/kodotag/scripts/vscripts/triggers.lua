@@ -5,7 +5,7 @@ function startArea(keys)
 end
 
 function miningGold(keys)
-	if(keys.activator._woodReturn)then return end
+	if(keys.activator._woodReturn or keys.activator._chopping)then return end
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
 	keys.activator:Stop()
 	if(base==nil) then
@@ -20,12 +20,14 @@ function miningGold(keys)
 	end
 	keys.activator._lastGoldMinePos=keys.caller:GetAbsOrigin()
 	keys.activator.count=0
+
 	table.insert(keys.caller.goldMiners,keys.activator)
 end
 
 function stopMiningGold(keys)
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
 	keys.activator._closestBase=base
+
 	if(keys.caller.goldMiners~=nil and #keys.caller.goldMiners>0 and in_array(keys.caller.goldMiners,keys.activator)) then
 		removeFromArray(keys.caller.goldMiners,keys.activator)
 	end
@@ -75,9 +77,7 @@ function chopWood(keys)
 			end
 			for k,val in ipairs(keys.target.treeChoppers) do
 				val._tree=newTree
-				print("time since chop:"..(GameRules:GetGameTime()-val._lastTreeChopTime))
 				if(not in_array(GameRules.KodoTagGameMode.returnStuff,val) and GameRules:GetGameTime()-val._lastTreeChopTime<10)then
-					print("moving a guy to new tree")
 					val:CastAbilityOnTarget(val._tree,val:FindAbilityByName("chop_wood"),getAbsoluteParent(val):GetPlayerID())
 				else
 					table.insert(newTree.treeChoppers,val)
