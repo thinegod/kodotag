@@ -14,7 +14,7 @@
 		"Ability2"					""			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					"upgrade_castle_1"			// Ability 4.
-		"Ability5"					"destroy_building"			// Ability 5.
+		"Ability5"					"sell_building"			// Ability 5.
 		"Ability6"					""			// Ability 6 - Extra.
 		"Ability7"					""			// Ability 7 - Extra.
 		"Ability8"					"building_cleanup"			// Ability 8 - Extra.

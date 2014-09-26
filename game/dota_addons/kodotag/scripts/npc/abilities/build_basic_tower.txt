@@ -3,7 +3,7 @@
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "rubick_telekinesis"
+	"AbilityTextureName"            "kodotag_basic_tower"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"MaxLevel"						"1"

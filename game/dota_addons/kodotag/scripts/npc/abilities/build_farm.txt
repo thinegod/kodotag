@@ -3,7 +3,7 @@
 	"BaseClass" 					"ability_datadriven"
 	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityManaCost" 				"0"
-	"AbilityTextureName"            "rubick_spell_steal"
+	"AbilityTextureName"            "kodotag_farm"
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"MaxLevel"						"1"

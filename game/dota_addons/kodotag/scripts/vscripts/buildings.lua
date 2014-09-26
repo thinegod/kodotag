@@ -27,10 +27,13 @@ function createBuilding(keys)
 				increaseMaxFood(building,keys.FoodIncrease)
 			end
 			unitDisable(keys.caster)
+			local attackCapability=building:GetAttackCapability()
+			building:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
 			keys.caster:AddNoDraw()
 			Timers:CreateTimer(keys.BuildTime,
 			function()
 				unitEnable(keys.caster)
+				building:SetAttackCapability(attackCapability)
 				keys.caster:RemoveNoDraw()
 			end
 			)
@@ -54,14 +57,13 @@ function destroyBuilding(keys)
 end
 
 function upgradeBuilding(keys)
-	print("fodkgfodsgkh")
-	print(keys.Unit)
 	local owner=keys.caster:GetOwnerEntity()
 	local loc = keys.caster:GetAbsOrigin()
 	local oldGoldInvest=keys.caster.goldInvestReturn
 	local oldWoodInvest=keys.caster.woodInvestReturn
 	local oldBuildTime=keys.caster.buildTime
 	local oldHullRadius = keys.caster._hullRadius
+	local oldHealthFraction = keys.caster:GetHealth()/keys.caster:GetMaxHealth()
 	local building = CreateUnitByName(keys.Unit, loc, false, nil, keys.caster:GetOwnerEntity(), owner:GetTeam())
 	if keys.Castle then
 		removeFromArray(GameRules.KodoTagGameMode._bases,keys.caster)
@@ -73,12 +75,13 @@ function upgradeBuilding(keys)
 	BuildingHelper:AddBuilding(building)
 	--building:UpdateHealth(keys.BuildTime,true,keys.Scale)
 	building:SetHullRadius(oldHullRadius*32)
+	building:SetHealth(oldHealthFraction*building:GetMaxHealth())
+	building:SetControllableByPlayer(owner:GetPlayerID(),true)
 	building._hullRadius = oldHullRadius
 	if building.SetInvulnCount ~=nil then
 		building:SetInvulnCount(0)
 	end
 	building:SetOwner(owner)
-	building:SetControllableByPlayer(owner:GetPlayerID(),true)
 	building.goldInvestReturn=keys.Cost/2+oldGoldInvest
 	building.woodInvestReturn=(keys.WoodCost or 0)/2+oldWoodInvest
 	building.buildTime=keys.ability:GetChannelTime()*1.15+oldBuildTime

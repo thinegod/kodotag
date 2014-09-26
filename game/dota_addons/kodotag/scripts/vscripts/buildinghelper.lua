@@ -371,13 +371,13 @@ function BuildingHelper:AddBuilding(building)
 	end
 
 	function building:UpdateHealth(fBuildTime, bScale, fMaxScale)
-		building:SetHealth(1)
 		building.nfBuildTime=fBuildTime
 		building.nControllingPlayer=getAbsoluteParent(building:GetOwnerEntity()):GetPlayerID()
 		
 		--building:SetControllableByPlayer(building.nControllingPlayer,false)
 		building.fTimeBuildingCompleted=GameRules:GetGameTime()+fBuildTime
-		building.nMaxHealth = building:GetMaxHealth()
+		building.nMaxHealth = building:GetHealth()
+		building:SetHealth(1)
 		building.nHealthInterval = building.nMaxHealth/(fBuildTime)
 		building:SetBaseHealthRegen(building.nHealthInterval)
 		Timers:CreateTimer(fBuildTime,

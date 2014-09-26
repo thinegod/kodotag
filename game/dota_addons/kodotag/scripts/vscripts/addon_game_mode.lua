@@ -70,10 +70,11 @@ function KodoTagGameMode:InitGameMode()
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetThink("OnThink",self,"OnThink",ON_THINK_TIME)
 	BuildingHelper:BlockGridNavSquares(16384)
-	GameRules:SetTreeRegrowTime(65000)
+	GameRules:SetTreeRegrowTime(15000)
 	ListenToGameEvent("entity_killed",Dynamic_Wrap(KodoTagGameMode,"OnEntityKilled"),self)
 	 ListenToGameEvent('player_connect_full', Dynamic_Wrap(KodoTagGameMode, 'OnPlayerConnectFull'), self)
 	Convars:RegisterCommand("difficultyVote",function(...) return self:difficultyVote(...) end,"difficultyVote",0)
+	Convars:RegisterCommand("addWood",function(...) return self:addWood(...) end,"addWood",0)
 	self:initGoldMines()
 	Spawner:Init()
 	--[[local creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
@@ -205,7 +206,15 @@ local returnPos=nil
 end
 
 
-
+function KodoTagGameMode:addWood(_,amount)
+	local cmdPlayer=Convars:GetCommandClient()
+	if cmdPlayer then
+		local playerID = cmdPlayer:GetPlayerID()
+		if playerID ~= nil and playerID ~= -1 then
+			cmdPlayer:GetAssignedHero().wood=cmdPlayer:GetAssignedHero().wood+amount--this should be input parameter
+		end
+	end
+end
 function KodoTagGameMode:DisplayBuildingGrids()
   print( '******* Displaying Building Grids ***************' )
   local cmdPlayer = Convars:GetCommandClient()
@@ -266,7 +275,9 @@ function KodoTagGameMode:playerInit(hero)
 		SendToConsole('dota_sf_hud_top 0')
 		SendToConsole('dota_render_crop_height 0')
 		SendToConsole('dota_render_y_inset 0')
-		--SendToServerConsole("sv_cheats 0")--
+		SendToConsole("dota_player_smart_multiunit_cast 1")--this is for using the 
+		--same ability with many selected units
+		--SendToServerConsole("sv_cheats 0")--this should be uncommented for a release version
 		table.insert(GameRules.KodoTagGameMode.players,hero)
 		FireGameEvent("start_vote",{player_ID=hero:GetPlayerID()})
 	end

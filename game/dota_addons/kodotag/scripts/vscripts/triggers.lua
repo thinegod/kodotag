@@ -61,14 +61,18 @@ function chopWood(keys)
 		local pos=keys.target:GetAbsOrigin()
 		keys.target:CutDown(DOTA_GC_TEAM_GOOD_GUYS)
 		local newTree=nil
-		local woodCount=0
+		local treeDistance=600
 		for _,v in ipairs(Entities:FindAllByClassnameWithin("ent_dota_tree",pos,600))do
-			if(v:IsStanding() and v._woodCount==nil) then
-				newTree=v
-				break
-			elseif(v:IsStanding() and v._woodCount>woodCount)then
-				newTree=v
-				woodCount=v._woodCount
+			if(v:IsStanding() and (v._woodCount==nil or v._woodCount>0)) then
+				if(newTree)then
+					if(distance(v,newTree)<treeDistance)then
+							treeDistance=distance(v,newTree)
+							print(treeDistance)
+							newTree=v
+					end
+				else
+					newTree=v
+				end	
 			end
 		end
 		if(newTree~=nil)then 
@@ -90,8 +94,6 @@ function chopWood(keys)
 	
 end
 function testTest(keys)
-	print("testetsset")
-	PrintTable(keys)
 
 
 end

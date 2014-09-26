@@ -1,8 +1,9 @@
 "unselectable"
 {
-	"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE|DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE "
 	"BaseClass"				"ability_datadriven"
-
+	"MaxLevel"				"1"
+	
 	"Modifiers"
 	{
 	  "modifier_unselectable"
