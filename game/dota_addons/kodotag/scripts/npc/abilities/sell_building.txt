@@ -1,0 +1,21 @@
+"sell_building"
+{
+	"BaseClass" "ability_datadriven"
+	"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityManaCost" "0"
+	"AbilityTextureName"            "kodotag_sell"
+	"AbilityCastRange" "250"
+	"AbilityCastPoint" "0"
+
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/buildings.lua"
+			"Function"			"destroyBuilding"
+			"Target"			"CASTER"
+		}
+	}
+			
+}
