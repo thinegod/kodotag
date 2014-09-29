@@ -27,7 +27,7 @@
 		"01"
 		{
 			"var_type"		"FIELD_INTEGER"
-			"cost"			"50"
+			"cost"			"100"
 		}
 	}
 }

@@ -5,6 +5,8 @@ function startArea(keys)
 end
 
 function miningGold(keys)
+	print(keys.activator._woodReturn)
+	print(keys.activator._chopping)
 	if(keys.activator._woodReturn or keys.activator._chopping)then return end
 	local base=GameRules.KodoTagGameMode:findClosestBase(keys.activator)
 	keys.activator:Stop()
@@ -61,16 +63,16 @@ function chopWood(keys)
 		local pos=keys.target:GetAbsOrigin()
 		keys.target:CutDown(DOTA_GC_TEAM_GOOD_GUYS)
 		local newTree=nil
-		local treeDistance=600
+		local treeDistance
 		for _,v in ipairs(Entities:FindAllByClassnameWithin("ent_dota_tree",pos,600))do
 			if(v:IsStanding() and (v._woodCount==nil or v._woodCount>0)) then
 				if(newTree)then
-					if(distance(v,newTree)<treeDistance)then
-							treeDistance=distance(v,newTree)
-							print(treeDistance)
+					if(distance(v,keys.target)<treeDistance)then
+							treeDistance=distance(v,keys.target)
 							newTree=v
 					end
 				else
+					treeDistance=distance(v,keys.target)
 					newTree=v
 				end	
 			end

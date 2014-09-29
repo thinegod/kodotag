@@ -13,6 +13,7 @@ require("units")
 require("util")
 require("spawner")
 require("timers")
+require("ai")
 
 function Precache( context )
 	--[[
@@ -77,11 +78,6 @@ function KodoTagGameMode:InitGameMode()
 	Convars:RegisterCommand("addWood",function(...) return self:addWood(...) end,"addWood",0)
 	self:initGoldMines()
 	Spawner:Init()
-	--[[local creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
-	creature:SetInitialGoalEntity(  Entities:FindByName(nil,"waypoint_1_1") )
-	creature = CreateUnitByName( "npc_dota_creature_gnoll_assassin" , Entities:FindByName(nil,"kodo_spawner_1"):GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_BADGUYS )
-	creature:SetInitialGoalEntity(  Entities:FindByName(nil,"waypoint_1_1") )]]
-	--GameRules:GetGameModeEntity():SetThink("OnMineGold",self,"MineGold")
 end
 
 function KodoTagGameMode:OnEntityKilled(keys)
@@ -102,6 +98,7 @@ end
 function KodoTagGameMode:OnThink()
 	self:checkForReconnects()
 	Spawner:Think()
+	AI:Think()
 	self:gatherThinker()
 	for _,val in ipairs(GameRules.KodoTagGameMode.players) do
 		FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,food=val.food,foodMax=val.foodMax,gold=val:GetGold()})

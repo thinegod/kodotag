@@ -39,14 +39,14 @@ function unitDisable(unit)
 	unit:AddNewModifier(unit,nil,"modifier_invulnerable",nil)
 	unit:AddAbility("unselectable")
 	unit:FindAbilityByName("unselectable"):UpgradeAbility()
-	setHiddenAllAbilities(unit,true)
+	--setHiddenAllAbilities(unit,true)
 end
 function unitEnable(unit)
 	unit:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 	unit:RemoveModifierByName("modifier_invulnerable")
 	unit:RemoveModifierByName("modifier_unselectable")
 	unit:RemoveAbility("unselectable")
-	setHiddenAllAbilities(unit,false)
+	--setHiddenAllAbilities(unit,false)
 end
 function removeAllAbilities(maybeUnit)
 	local unit

@@ -1,5 +1,6 @@
 
 function createBuilding(keys)
+	if(keys.caster:IsUnselectable())then return end
 	if (not keys.caster:IsHero()) then
 		keys.caster.GetPlayerID=function() return keys.caster:entindex() end
 		BuildingHelper:AddUnit(keys.caster)
