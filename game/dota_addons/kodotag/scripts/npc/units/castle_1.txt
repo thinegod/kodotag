@@ -9,9 +9,9 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"3"
+		"AbilityLayout"				"4"
 		"Ability1"					"create_worker"			// Ability 1.
-		"Ability2"					""			// Ability 2.
+		"Ability2"					"create_rallypoint"			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					"upgrade_castle_1"			// Ability 4.
 		"Ability5"					"sell_building"			// Ability 5.

@@ -9,7 +9,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"7"
+		"AbilityLayout"				"8"
 		"Ability1"					"create_worker"			// Ability 1.
 		"Ability2"					"create_architect"			// Ability 2.
 		"Ability3"					"upgrade_move_speed"			// Ability 3.
@@ -17,7 +17,8 @@
 		"Ability5"					"upgrade_tower_range"			// Ability 5.
 		"Ability6"					"upgrade_tower_damage"				// Ability 6 - Extra.
 		"Ability7"					"sell_building"			// Ability 7 - Extra.
-		"Ability8"					"building_cleanup"			// Ability 8 - Extra.
+		"Ability8"					"create_rallypoint"
+		"Ability9"					"building_cleanup"			// Ability 8 - Extra.
 
 		// Armor
 		//----------------------------------------------------------------

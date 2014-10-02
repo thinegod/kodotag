@@ -22,7 +22,7 @@ function Spawner:Init()
 end
 
 function Spawner:Think()
-	if(not self.phases[self.currentPhase]) then return end--You're done with the game, basically
+	if(not self.phases[self.currentPhase]) then return end--there are no more phases
 	local currTime=GameRules:GetGameTime()
 	if(currTime < self.startTime+self.initialSpawnDelay)then return end
 	if(self.lastSpawnTime+self.phases[self.currentPhase].spawnInterval < currTime)then

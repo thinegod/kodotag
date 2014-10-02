@@ -27,7 +27,7 @@ function Precache( context )
 	for i=1,6 do 
 		PrecacheUnitByNameSync("barricade_"..i,context)
 	end
-	PrecacheResource("particles_folder","ranged_tower_good",context)
+	PrecacheResource("particle_folder","particles/base_attacks",context)
 	--PrecacheResource("soundfile","coins.vsnd",context)
 	PrecacheUnitByNameSync("tower_1",context)
 	PrecacheUnitByNameSync("farm",context)
@@ -38,7 +38,10 @@ function Precache( context )
 	PrecacheResource("particle","particles/items2_fx/hand_of_midas_coin_shape.vpcf",context)
 	PrecacheResource("particle_folder","particles/units/heroes/hero_jakiro",context)
 	PrecacheUnitByNameSync("kodo_1",context)
-	PrecacheResource("particle","particles/neutral_fx/thunderlizard_base_attack.vpcf",context)
+	PrecacheUnitByNameSync("rallypoint",context)
+	PrecacheResource("particle_folder","particles/neutral_fx",context)
+	
+	
 	
 	--PrecacheModel("npc_dota_creature_gnoll_assassin",context)
 end

@@ -1,0 +1,21 @@
+"create_rallypoint"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"					"farsight"
+	"AbilityTextureName"			"legion_commander_duel"												
+	"MaxLevel"						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT|DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"0"
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/buildings.lua"
+			"Function"			"createRallypoint"
+			"Target"			"POINT"
+		}
+	}
+}

@@ -132,3 +132,30 @@ function increaseMaxFood(building, amount)
 	owner.foodMax=owner.foodMax+amount
 end
 
+function createRallypoint(keys)
+	local rp
+	local pos
+	if keys.target~=nil then
+		pos=keys.target:GetAbsOrigin()
+		rp=CreateUnitByName("rallypoint",Vector(pos.x,pos.y,-200),false,nil,nil,keys.caster:GetTeam())
+		rp:SetAbsOrigin(pos)
+		keys.caster._rallypoint=keys.target
+	else
+		pos=keys.target_points[1]
+		rp=CreateUnitByName("rallypoint",Vector(pos.x,pos.y,-200),false,nil,nil,keys.caster:GetTeam())
+		rp:SetAbsOrigin(pos)
+		keys.caster._rallypoint=pos
+	end
+	
+	Timers:CreateTimer(3,
+	function()
+		rp:AddNoDraw()
+	end)
+	if lastRp~=nil then
+		lastRp:Destroy()
+	end
+
+	lastRp=rp
+	
+end
+

@@ -30,7 +30,7 @@
 	"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
 	"AttackAcquisitionRange"	"200"		// Range within a target can be acquired.
 	"AttackRange"				"200"		// Range within a target can be attacked.
-	"ProjectileModel"			"thunderlizard_base_attack"	// Particle system model for projectile.
+	"ProjectileModel"			"particles/neutral_fx/thunderlizard_base_attack.vpcf"	// Particle system model for projectile.
 	"ProjectileSpeed"			"1500"		// Speed of projectile.		   
 
 	// Bounds
