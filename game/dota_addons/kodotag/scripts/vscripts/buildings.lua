@@ -54,9 +54,6 @@ function destroyBuilding(keys)
 	end
 	owner:SetGold(owner:GetGold()+keys.caster.goldInvestReturn,false)
 	owner.wood=owner.wood+keys.caster.woodInvestReturn
-	if(keys.caster:GetUnitName() == "farm") then
-		decreaseMaxFood(keys.caster,6)
-	end
 	keys.caster:RemoveBuilding(keys.caster._hullRadius,true)
 end
 
@@ -135,11 +132,6 @@ function increaseMaxFood(building, amount)
 	owner.foodMax=owner.foodMax+amount
 end
 
-function decreaseMaxFood(building, amount)
-	local owner=getAbsoluteParent(building:GetOwnerEntity())
-	building.foodIncrease=0--(building.foodIncrease or 0)+amount
-	owner.foodMax=owner.foodMax-amount
-end
 
 function createRallypoint(keys)
 	local rp

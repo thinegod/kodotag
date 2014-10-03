@@ -92,7 +92,7 @@ function KodoTagGameMode:OnEntityKilled(keys)
 	if(killedUnit.foodCost) then
 		owner.food=owner.food-killedUnit.foodCost
 	end
-	if(killedUnit.farm) then
+	if(killedUnit.foodIncrease) then
 		owner.foodMax=owner.foodMax-killedUnit.foodIncrease
 	end
 

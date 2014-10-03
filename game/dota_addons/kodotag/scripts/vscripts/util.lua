@@ -2,7 +2,7 @@
 function pay(unit,cost,woodCost,foodCost)
 	local player
 	player=getAbsoluteParent(unit)	
-	if (player:GetGold()-cost >= 0 and player.wood-woodCost>=0 and player.food+foodCost<=player.foodMax) then
+	if (player:GetGold()-cost >= 0 and player.wood-woodCost>=0 and (player.food+foodCost<=player.foodMax or foodCost==0)) then
 		player:SetGold(player:GetGold()-cost,false)
 		player.wood=player.wood-woodCost
 		player.food=player.food+foodCost
@@ -18,10 +18,6 @@ function addAbility(keys)
 		return nil
 	end
 	for abilityName in string.gmatch(keys.Ability,"[%w_]+") do
-		if(abilityName == "go_back" and not keys.caster:IsHero()) then
-			abilityName = keys.caster:GetUnitName().."_"..abilityName
-			print("Dette bör vare \"architect\": "..keys.caster:GetUnitName())
-		end
 		keys.caster:AddAbility(abilityName)
 		keys.caster:FindAbilityByName(abilityName):UpgradeAbility()
 	end
@@ -169,6 +165,9 @@ function reimburse(keys)
 		absParent:SetGold(absParent:GetGold()+keys.Cost,false)
 		if(keys.WoodCost~=nil)then 
 			absParent.wood=absParent.wood+keys.WoodCost
+		end
+		if(keys.FoodCost~=nil) then
+			absParent.food=absParent.food-keys.FoodCost
 		end
 		keys.ability._couldAfford=nil
 	end

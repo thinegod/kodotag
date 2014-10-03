@@ -13,7 +13,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"5"
-		"Ability1"					"build"			// Ability 1.
+		"Ability1"					"architect_build"			// Ability 1.
 		"Ability2"					"repair"			// Ability 2.
 		"Ability3"					"chop_wood"			// Ability 3.
 		"Ability4"					""			// Ability 4.
