@@ -1,0 +1,52 @@
+"upgrade"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityManaCost" 				"0"
+	"AbilityTextureName"            "kodotag_upgrade"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint" 				"0"
+	"AbilityCooldown"				"0"
+	"MaxLevel"						"1"
+	
+	"OnSpellStart"
+	{
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"create_worker"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"create_architect"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"upgrade"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"sell_building"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"create_rallypoint"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"addAbility"
+			"Ability"			"upgrade_move_speed,upgrade_tower_attack,upgrade_tower_range,upgrade_tower_damage,citadel_go_back"
+		}
+
+		
+		
+	}
+
+			
+}

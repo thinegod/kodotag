@@ -18,6 +18,10 @@ function addAbility(keys)
 		return nil
 	end
 	for abilityName in string.gmatch(keys.Ability,"[%w_]+") do
+		if(abilityName == "go_back" and not keys.caster:IsHero()) then
+			abilityName = keys.caster:GetUnitName().."_"..abilityName
+			print("Dette bör vare \"architect\": "..keys.caster:GetUnitName())
+		end
 		keys.caster:AddAbility(abilityName)
 		keys.caster:FindAbilityByName(abilityName):UpgradeAbility()
 	end
@@ -77,10 +81,10 @@ function distance(eA,eB)
 end
 
 function PrintSquare(v,size)
-			DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
-			DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x-size,v.y-size,BH_Z), 255, 0, 0, false, 30)
-			DebugDrawLine(Vector(v.x-size,v.y-size,BH_Z), Vector(v.x+size,v.y-size,BH_Z), 255, 0, 0, false, 30)
-			DebugDrawLine(Vector(v.x+size,v.y-size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x-size,v.y-size,BH_Z), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x-size,v.y-size,BH_Z), Vector(v.x+size,v.y-size,BH_Z), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x+size,v.y-size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
 end
 
 function PrintCircle(v,radius)
@@ -115,12 +119,12 @@ function in_array(array,element)--someone make this work..
 		end
 		return true
 	else]]
-for i=1,#array do
-	if array[i]==element then
-	return true
+	for i=1,#array do
+		if array[i]==element then
+		return true
+		end
 	end
-end
-return false
+	return false
 end
 
 function PrintTable(t, indent, done)

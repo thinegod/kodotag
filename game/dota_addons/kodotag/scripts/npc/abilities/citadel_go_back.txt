@@ -1,0 +1,49 @@
+"citadel_go_back"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityManaCost" 				"0"
+	"AbilityTextureName"            "kodotag_return"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint" 				"0"
+	"AbilityCooldown"				"0"
+	"MaxLevel"						"1"
+
+
+
+	"OnSpellStart"
+	{
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"upgrade_move_speed"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"upgrade_tower_attack"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"upgrade_tower_range"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"upgrade_tower_damage"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"citadel_go_back"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"addAbility"
+			"Ability"			"create_worker,create_architect,upgrade,sell_building,create_rallypoint"
+		}
+	}
+}

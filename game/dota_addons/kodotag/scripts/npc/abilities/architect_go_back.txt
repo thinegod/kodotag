@@ -1,0 +1,49 @@
+"architect_go_back"
+{
+	"BaseClass" 					"ability_datadriven"
+	"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityManaCost" 				"0"
+	"AbilityTextureName"            "kodotag_return"
+	"AbilityCastRange" 				"250"
+	"AbilityCastPoint" 				"0"
+	"AbilityCooldown"				"0"
+	"MaxLevel"						"1"
+
+
+
+	"OnSpellStart"
+	{
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_barricade"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_castle"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_basic_tower"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"build_farm"
+		}
+		"RemoveAbility"
+		{
+			"Target"			"CASTER"
+			"AbilityName"		"architect_go_back"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/util.lua"
+			"Function"			"addAbility"
+			"Ability"			"build,repair,chop_wood"
+		}
+	}
+}
