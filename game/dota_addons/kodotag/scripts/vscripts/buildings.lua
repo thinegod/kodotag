@@ -25,7 +25,10 @@ function createBuilding(keys)
 				table.insert(GameRules.KodoTagGameMode._bases,building)
 				building._castle=true
 			elseif keys.FoodIncrease then
-				increaseMaxFood(building,keys.FoodIncrease)
+				Timers:CreateTimer(keys.BuildTime,
+				function()
+					increaseMaxFood(building,keys.FoodIncrease)
+				end)
 			end
 			unitDisable(keys.caster)
 			local attackCapability=building:GetAttackCapability()
@@ -44,7 +47,6 @@ function createBuilding(keys)
 		end
 	else
 		FireGameEvent("error_msg",{player_ID=keys.caster:GetPlayerOwnerID(),_error="Can't place building there"})
-		print("fired game event, cant place building there")
 	end
 end
 function destroyBuilding(keys)

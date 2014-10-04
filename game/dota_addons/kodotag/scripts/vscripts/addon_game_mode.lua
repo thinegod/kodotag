@@ -3,6 +3,7 @@
 GATHER_THINK_TIME=0.2
 GOLD_MINE_TIME=3
 ON_THINK_TIME=0.2
+SURVIVE_TIME=45--in minutes
 if KodoTagGameMode == nil then
 	KodoTagGameMode = class({})
 end
@@ -39,6 +40,7 @@ function Precache( context )
 	PrecacheResource("particle_folder","particles/units/heroes/hero_jakiro",context)
 	PrecacheUnitByNameSync("kodo_1",context)
 	PrecacheUnitByNameSync("rallypoint",context)
+	PrecacheUnitByNameSync("flag",context)
 	PrecacheResource("particle_folder","particles/neutral_fx",context)
 	
 	
@@ -72,11 +74,13 @@ function KodoTagGameMode:InitGameMode()
 	GameRules:SetGoldTickTime( 60.0 )
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetSameHeroSelectionEnabled(true)
+	GameRules:SetHeroRespawnEnabled(false)
 	GameRules:GetGameModeEntity():SetThink("OnThink",self,"OnThink",ON_THINK_TIME)
 	BuildingHelper:BlockGridNavSquares(16384)
 	GameRules:SetTreeRegrowTime(15000)
 	ListenToGameEvent("entity_killed",Dynamic_Wrap(KodoTagGameMode,"OnEntityKilled"),self)
-	 ListenToGameEvent('player_connect_full', Dynamic_Wrap(KodoTagGameMode, 'OnPlayerConnectFull'), self)
+	ListenToGameEvent('player_connect_full', Dynamic_Wrap(KodoTagGameMode, 'OnPlayerConnectFull'), self)
+	ListenToGameEvent('dota_player_killed', Dynamic_Wrap(KodoTagGameMode, 'OnPlayerKilled'), self)
 	Convars:RegisterCommand("difficultyVote",function(...) return self:difficultyVote(...) end,"difficultyVote",0)
 	Convars:RegisterCommand("addWood",function(...) return self:addWood(...) end,"addWood",0)
 	self:initGoldMines()
@@ -100,11 +104,18 @@ end
 
 function KodoTagGameMode:OnThink()
 	self:checkForReconnects()
-	Spawner:Think()
-	AI:Think()
-	self:gatherThinker()
-	for _,val in ipairs(GameRules.KodoTagGameMode.players) do
-		FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,food=val.food,foodMax=val.foodMax,gold=val:GetGold()})
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		if(GameRules:GetGameTime()>(SURVIVE_TIME*60))then
+			GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
+			return
+		end
+		self:CheckForDefeat()
+		Spawner:Think()
+		AI:Think()
+		self:gatherThinker()
+		for _,val in ipairs(GameRules.KodoTagGameMode.players) do
+			FireGameEvent("updateResourcePanel",{player_ID=val:GetPlayerID(),wood=val.wood,food=val.food,foodMax=val.foodMax,gold=val:GetGold()})
+		end
 	end
 	return ON_THINK_TIME
 	
@@ -263,13 +274,7 @@ function KodoTagGameMode:playerInit(hero)
 		hero.food=1
 		hero.foodMax=4
 		hero.foodCost=1
-		removeAllAbilities(hero)
-		hero:AddAbility("build")
-		hero:AddAbility("chop_wood")
-		hero:AddAbility("repair")
-		hero:AddAbility("wind_walk")
-		hero:AddAbility("farsight")
-		upgradeAllAbilities(hero)
+		self:initAbilities(hero)
 		SendToServerConsole("sv_cheats 1")
 		SendToConsole('dota_sf_hud_inventory 0')
 		SendToConsole('dota_sf_hud_top 0')
@@ -282,10 +287,68 @@ function KodoTagGameMode:playerInit(hero)
 		FireGameEvent("start_vote",{player_ID=hero:GetPlayerID()})
 	end
 end
+
+function KodoTagGameMode:initAbilities(hero)
+	removeAllAbilities(hero)
+	hero:AddAbility("build")
+	hero:AddAbility("chop_wood")
+	hero:AddAbility("repair")
+	hero:AddAbility("wind_walk")
+	hero:AddAbility("farsight")
+	upgradeAllAbilities(hero)
+end
 function KodoTagGameMode:OnPlayerConnectFull(keys)
 	local player = PlayerInstanceFromIndex(keys.index + 1)
-    local hero = CreateHeroForPlayer('npc_dota_hero_invoker', player)
-	print("created hero for player")
+    CreateHeroForPlayer('npc_dota_hero_invoker', player)
 end
 
 
+function KodoTagGameMode:OnPlayerKilled(keys)--Should also kill everything that belongs to that player!!
+	local player=PlayerResource:GetPlayer(keys.PlayerID)
+	local point=Entities:FindByName(nil,"rescue_zone"):GetAbsOrigin()+RandomVector( RandomFloat( 200, 300 ))
+	local flag=CreateUnitByName("flag",point,false,nil,nil,DOTA_TEAM_GOODGUYS)
+	flag:SetOwner(player)
+	flag:SetControllableByPlayer(keys.PlayerID,true)
+	Timers:CreateTimer(1,
+	function() 
+		PlayerResource:SetCameraTarget(keys.PlayerID,flag)
+	end)
+	Timers:CreateTimer(4,
+	function()
+		PlayerResource:SetCameraTarget(keys.PlayerID,nil)
+	end)
+	for _,v in ipairs(Entities:FindAllByName("*"))do
+		if(v~=player:GetAssignedHero() and getAbsoluteParent(v)==player:GetAssignedHero())then
+			if(v.RemoveBuilding)then
+				v:RemoveBuilding(v._hullRadius,true)
+			elseif(v.foodCost)then
+				v:Kill(nil,nil)
+			end
+		end
+	end
+end
+
+function KodoTagGameMode:CheckForDefeat()
+	if GameRules:State_Get() ~= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		return
+	end
+	local bAllPlayersDead = true
+	for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+		if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_GOODGUYS then
+			--if not PlayerResource:HasSelectedHero( nPlayerID ) then
+				--bAllPlayersDead = false
+			--else
+			local hero = PlayerResource:GetPlayer( nPlayerID ):GetAssignedHero()
+			if hero and hero:IsAlive() then
+				print("this hero is alive apparently")
+				PrintTable(hero)
+				bAllPlayersDead = false
+			end
+			--end
+		end
+	end
+
+	if bAllPlayersDead then
+		GameRules:MakeTeamLose( DOTA_TEAM_GOODGUYS )
+	end
+end

@@ -9,8 +9,8 @@ function AI:Think()
 		if(unit==nil)then
 			table.remove(Spawner.unitsAlive,k)
 		elseif(unit:IsIdle()) then
-			print("kodo"..unit:entindex().." moving to:")
-			print(GameRules.KodoTagGameMode.players[1]:GetAbsOrigin())
+			--print("kodo"..unit:entindex().." moving to:")
+			--print(GameRules.KodoTagGameMode.players[1]:GetAbsOrigin())
 			unit:MoveToPositionAggressive(GameRules.KodoTagGameMode.players[1]:GetAbsOrigin())
 		end
 	end

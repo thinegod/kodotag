@@ -1,5 +1,5 @@
 require("util")
-WOOD_COUNT=20
+WOOD_COUNT=50
 function startArea(keys)
 	--not currently used mimi
 end
@@ -98,6 +98,20 @@ end
 function testTest(keys)
 
 
+end
+
+function rescue(keys)
+	for _,v in ipairs(Entities:FindAllByModel("models/props_structures/test_flag/test_flag.vmdl")) do
+		local point = v:GetAbsOrigin()
+		local hero=PlayerResource:GetPlayer(v:GetOwner():GetPlayerID()):GetAssignedHero()
+		hero.food=hero.food+1
+		hero:SetControllableByPlayer(v:GetOwner():GetPlayerID(),true)
+		hero:RespawnUnit()
+		GameRules.KodoTagGameMode:initAbilities(hero)
+		v:Destroy()
+		hero:SetAbsOrigin(point)
+	end
+	
 end
 
 

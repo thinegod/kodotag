@@ -24,7 +24,7 @@
 	"ProjectileSpeed"			"0"			// Speed of projectile.
 	
 	//status
-	"StatusHealth"				"4500"		// Base health.
+	"StatusHealth"				"20"		// Base health.
 	"StatusHealthRegen"			"0.0"		// Health regeneration rate.
 	"StatusMana"				"200"			// Base mana.
 	"StatusManaRegen"			"1"			// Mana regeneration rate.

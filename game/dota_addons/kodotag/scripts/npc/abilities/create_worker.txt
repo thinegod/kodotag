@@ -40,6 +40,7 @@
 			"ScriptFile"		"scripts/vscripts/units.lua"
 			"Function"			"createUnit"
 			"Unit"				"worker"
+			"FoodCost"			"%foodCost"
 		}
 	}
 	"OnChannelInterrupted"

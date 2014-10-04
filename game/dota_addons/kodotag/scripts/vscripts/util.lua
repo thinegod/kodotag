@@ -77,10 +77,10 @@ function distance(eA,eB)
 end
 
 function PrintSquare(v,size)
-	DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
-	DebugDrawLine(Vector(v.x-size,v.y+size,BH_Z), Vector(v.x-size,v.y-size,BH_Z), 255, 0, 0, false, 30)
-	DebugDrawLine(Vector(v.x-size,v.y-size,BH_Z), Vector(v.x+size,v.y-size,BH_Z), 255, 0, 0, false, 30)
-	DebugDrawLine(Vector(v.x+size,v.y-size,BH_Z), Vector(v.x+size,v.y+size,BH_Z), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x-size,v.y+size,v.z+50), Vector(v.x+size,v.y+size,v.z+50), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x-size,v.y+size,v.z+50), Vector(v.x-size,v.y-size,v.z+50), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x-size,v.y-size,v.z+50), Vector(v.x+size,v.y-size,v.z+50), 255, 0, 0, false, 30)
+	DebugDrawLine(Vector(v.x+size,v.y-size,v.z+50), Vector(v.x+size,v.y+size,v.z+50), 255, 0, 0, false, 30)
 end
 
 function PrintCircle(v,radius)
@@ -102,19 +102,7 @@ function removeFromArray(array,element)
 end
 
 
-function in_array(array,element)--someone make this work..
-	--[[if(type(element)=="table" and #array>2) then
-		for i=1,#array do
-			for key,value in ipairs(element) do
-				for k,v in ipairs(array[i]) do
-					if(key==k and v~=value) then
-					return false
-					end
-				end
-			end
-		end
-		return true
-	else]]
+function in_array(array,element)
 	for i=1,#array do
 		if array[i]==element then
 		return true
@@ -186,7 +174,7 @@ function getAbsoluteParent(unit)
 	if (unit==nil) then
 		return nil
 	end
-	if(unit:IsHero()) then
+	if(unit.IsHero and unit:IsHero()) then
 		return unit
 	end
 	-- if (unit:GetOwner()==nil and unit:GetOwnerEntity()==nil) then
