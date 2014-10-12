@@ -4,7 +4,7 @@ if Spawner == nil then
 end
 
 function Spawner:Init()
-	self.startTime=GameRules:GetGameTime()
+	self.startTime=0
 	self.playerCount=1
 	self.difficulty=1
 	self.initialSpawnDelay=20
@@ -23,6 +23,7 @@ end
 
 function Spawner:Think()
 	if(not self.phases[self.currentPhase]) then return end--there are no more phases
+	if(self.startTime==0)then self.startTime=GameRules:GetGameTime() end
 	local currTime=GameRules:GetGameTime()
 	if(currTime < self.startTime+self.initialSpawnDelay)then return end
 	if(self.lastSpawnTime+self.phases[self.currentPhase].spawnInterval < currTime)then

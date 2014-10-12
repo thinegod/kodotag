@@ -85,6 +85,7 @@ function KodoTagGameMode:InitGameMode()
 	Convars:RegisterCommand("addWood",function(...) return self:addWood(...) end,"addWood",0)
 	self:initGoldMines()
 	Spawner:Init()
+
 end
 
 function KodoTagGameMode:OnEntityKilled(keys)
@@ -162,7 +163,7 @@ local base=nil
 				unitDisable(value.goldMiners[1])
 				value.count=0
 				value._mining=value.goldMiners[1]
-			elseif(value.count>=2) then
+			elseif(value.count>=1) then
 				local miner=value._mining
 				miner:RemoveNoDraw()
 				unitEnable(miner)
@@ -222,7 +223,7 @@ function KodoTagGameMode:addWood(_,amount)
 	if cmdPlayer then
 		local playerID = cmdPlayer:GetPlayerID()
 		if playerID ~= nil and playerID ~= -1 then
-			cmdPlayer:GetAssignedHero().wood=cmdPlayer:GetAssignedHero().wood+amount--this should be input parameter
+			cmdPlayer:GetAssignedHero().wood=cmdPlayer:GetAssignedHero().wood+amount
 		end
 	end
 end
@@ -277,7 +278,7 @@ function KodoTagGameMode:playerInit(hero)
 		self:initAbilities(hero)
 		SendToServerConsole("sv_cheats 1")
 		SendToConsole('dota_sf_hud_inventory 0')
-		SendToConsole('dota_sf_hud_top 0')
+		--SendToConsole('dota_sf_hud_top 0')
 		SendToConsole('dota_render_crop_height 0')
 		SendToConsole('dota_render_y_inset 0')
 		SendToConsole("dota_player_smart_multiunit_cast 1")--this is for using the 
@@ -285,6 +286,12 @@ function KodoTagGameMode:playerInit(hero)
 		--SendToServerConsole("sv_cheats 0")--this should be uncommented for a release version
 		table.insert(GameRules.KodoTagGameMode.players,hero)
 		FireGameEvent("start_vote",{player_ID=hero:GetPlayerID()})
+	--[[else
+		PrintTable(self.players)
+		print(hero)
+		print("konstigt, hero finns redan i players")
+		self:initAbilities(hero)
+		FireGameEvent("start_vote",{player_ID=hero:GetPlayerID()})]]
 	end
 end
 
@@ -335,16 +342,12 @@ function KodoTagGameMode:CheckForDefeat()
 	local bAllPlayersDead = true
 	for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_GOODGUYS then
-			--if not PlayerResource:HasSelectedHero( nPlayerID ) then
-				--bAllPlayersDead = false
-			--else
 			local hero = PlayerResource:GetPlayer( nPlayerID ):GetAssignedHero()
 			if hero and hero:IsAlive() then
-				print("this hero is alive apparently")
-				PrintTable(hero)
 				bAllPlayersDead = false
 			end
-			--end
+		else
+			bAllPlayersDead = false
 		end
 	end
 
