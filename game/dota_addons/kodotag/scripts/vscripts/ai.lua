@@ -9,9 +9,23 @@ function AI:Think()
 		if(unit==nil)then
 			table.remove(Spawner.unitsAlive,k)
 		elseif(unit:IsIdle()) then
-			--print("kodo"..unit:entindex().." moving to:")
-			--print(GameRules.KodoTagGameMode.players[1]:GetAbsOrigin())
-			unit:MoveToPositionAggressive(GameRules.KodoTagGameMode.players[1]:GetAbsOrigin())
+			if(not unit.targetPlayer or not unit.targetPlayer:IsAlive())then
+				unit.targetPlayer=self:SelectTarget()
+			end
+			if(unit.targetPlayer)then
+				unit:MoveToPositionAggressive(unit.targetPlayer:GetAbsOrigin())
+			end
 		end
 	end
+end
+
+function AI:SelectTarget()
+	local possibleTargets={}
+	for i=1,10 do			--try to find a player that is alive but not forever.	
+		if(not GameRules.KodoTagGameMode.players[i])then break end
+		if(GameRules.KodoTagGameMode.players[i]:IsAlive())then
+			table.insert(possibleTargets,GameRules.KodoTagGameMode.players[i])
+		end
+	end
+	return possibleTargets[math.random(#possibleTargets)]
 end

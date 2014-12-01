@@ -31,6 +31,7 @@ function createBuilding(keys)
 				end)
 			end
 			unitDisable(keys.caster)
+			keys.caster:FindAbilityByName("go_back"):SetHidden(true)
 			local attackCapability=building:GetAttackCapability()
 			building:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
 			keys.caster:AddNoDraw()

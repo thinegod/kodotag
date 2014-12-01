@@ -46,7 +46,7 @@ function unitEnable(unit)
 	unit:RemoveModifierByName("modifier_invulnerable")
 	unit:RemoveModifierByName("modifier_unselectable")
 	unit:RemoveAbility("unselectable")
-	--setHiddenAllAbilities(unit,false)
+	setHiddenAllAbilities(unit,false)
 end
 function removeAllAbilities(maybeUnit)
 	local unit

@@ -55,12 +55,26 @@ function Activate()
 	Convars:RegisterCommand( "buildingGrid", Dynamic_Wrap(KodoTagGameMode, 'DisplayBuildingGrids'), "blah", 0 )
 end
 
+function KodoTagGameMode:GetDifficulty()
+	local count=-1
+	local key=1
+	local c=1
+	for k,v in pairs(self.voteTable) do
+		if(v>count)then
+			count=v
+			key=c
+		end
+		c=c+1
+	end
+	return key
+end
+
 function KodoTagGameMode:InitGameMode()
 	self.goldMines={}
 	self.returnStuff={}
 	self._bases={}
 	self.players={}
-	self._voteTable={Noob=0,Easy=0,Normal=0,Hard=0,Extreme=0}
+	self.voteTable={Noob=0,Easy=0,Normal=0,Hard=0,Extreme=0}
 	self.goldGain=10
 	self.woodGain=10
 	GameRules:SetTimeOfDay( 0.75 )
@@ -142,8 +156,8 @@ function KodoTagGameMode:findClosestBase(unit)
 end
 
 function KodoTagGameMode:difficultyVote(_,difficulty)
-	self._voteTable[difficulty]=self._voteTable[difficulty]+1
-	PrintTable(self._voteTable)
+	self.voteTable[difficulty]=self.voteTable[difficulty]+1
+	PrintTable(self.voteTable)
 end
 function KodoTagGameMode:initGoldMines()
 	for k,v in ipairs(Entities:FindAllByName("Goldmine*")) do
@@ -310,7 +324,7 @@ function KodoTagGameMode:OnPlayerConnectFull(keys)
 end
 
 
-function KodoTagGameMode:OnPlayerKilled(keys)--Should also kill everything that belongs to that player!!
+function KodoTagGameMode:OnPlayerKilled(keys)
 	local player=PlayerResource:GetPlayer(keys.PlayerID)
 	local point=Entities:FindByName(nil,"rescue_zone"):GetAbsOrigin()+RandomVector( RandomFloat( 200, 300 ))
 	local flag=CreateUnitByName("flag",point,false,nil,nil,DOTA_TEAM_GOODGUYS)
@@ -344,10 +358,9 @@ function KodoTagGameMode:CheckForDefeat()
 		if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_GOODGUYS then
 			local hero = PlayerResource:GetPlayer( nPlayerID ):GetAssignedHero()
 			if hero and hero:IsAlive() then
+				--print("some hero is alive")
 				bAllPlayersDead = false
 			end
-		else
-			bAllPlayersDead = false
 		end
 	end
 
