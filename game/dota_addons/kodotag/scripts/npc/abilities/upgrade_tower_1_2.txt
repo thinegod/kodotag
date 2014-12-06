@@ -7,7 +7,6 @@
 	"AbilityCastRange" 				"250"
 	"AbilityCastPoint" 				"0"
 	"AbilityChannelTime"			"8.0"
-	"AbilityCooldown"				"8.0"
 	
 	"AbilitySpecial"
 	{
